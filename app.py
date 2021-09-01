@@ -1,10 +1,12 @@
 import string
 import random
+
 from login_top import log_top
 from admin_view import adm_view
 from student_view import std_view
 from add_books import books
 from lender import lend
+from create_qr import qr
 
 from flask import Flask, Blueprint
 
@@ -26,6 +28,9 @@ app.register_blueprint(books)
 
 # 貸借
 app.register_blueprint(lend)
+
+# qrコード
+app.register_blueprint(qr)
 
 
 if __name__ == '__main__':
