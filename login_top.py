@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, render_template
-
+# 有原 担当
 log_top = Blueprint('login_top', __name__)
 
 
