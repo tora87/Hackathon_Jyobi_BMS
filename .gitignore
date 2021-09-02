@@ -278,3 +278,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# generate QR Code png
+static/images/qrcode.png
+
