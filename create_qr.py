@@ -70,10 +70,22 @@ class Email:
         kwargs['password'] : password
             送信元のメールアドレスのパスワード
         """
-        self.subject = kwargs['Subject']
-        self.body = kwargs['body']
-        self.ID = kwargs['id']  # 固定のアドレスに変更も可
-        self.PASS = kwargs['password']
+        if 'Subject' in kwargs:
+            self.subject = kwargs['Subject']
+        else:
+            self.subject = "BMSシステムからのお知らせ"
+        if 'body' in kwargs:
+            self.body = kwargs['body']
+        else:
+            self.body = " このメールは自動送信です。\n\n BMSシステムへログインする際に使用できるQRコードを添付いたします。\n"
+        if 'id' in kwargs:
+            self.ID = kwargs['id']  # 固定のアドレスに変更も可
+        else:
+            self.id = " "  # 固定のメールアドレス記入場所
+        if 'password' in kwargs:
+            self.PASS = kwargs['password']
+        else:
+            self.PASS = " "  # 固定のメールアドレス
         self.HOST = "smtp.gmail.com"
         self.PORT = 587
 
