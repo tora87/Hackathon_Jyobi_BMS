@@ -20,8 +20,9 @@ def make_qr(request):
         return render_template('qr.html')
     elif request.method == 'post':
         student_id = request.form.post['student_id']
+        student_name = request.form.post['student_name']
         qr_code = makeQR()
-        qr_code.generate_qr_code(student_id)
+        qr_code.generate_qr_code(student_id=student_id, student_name=student_name)
         return render_template('qr.html')
 
 
@@ -33,7 +34,7 @@ class makeQR:
         self.output = BASE_DIR + '/static/images/qrcode.png'
         self.qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_Q, box_size=10, border=4, )
 
-    def generate_qr_code(self, **kwargs: 'student_id, student_name') -> 'qr_images.png':
+    def generate_qr_code(self, **kwargs: 'student_id, student_name'):
         """
         受け取った引数を、QRコードとして生成する。static/images/qrcode.pngとして保存される
 
@@ -44,7 +45,6 @@ class makeQR:
         kwargs['student_name'] : string
             対象の生徒の名前。
         """
-        text = ""
         self.qr.add_data(kwargs['student_id'] + '+' + kwargs['student_name'])
         self.qr.make(fit=True)
         img = self.qr.make_image(fill_color="black", back_color="white")
@@ -89,7 +89,7 @@ class Email:
         self.HOST = "smtp.gmail.com"
         self.PORT = 587
 
-    def send_email(self, sender_email_address: 'recipient email_address'):
+    def send_email(self, sender_email_address: 'recipient email_address') -> 'error or None':
         """
         受け取った引数のメールアドレスに宛てて、QRコードを添付したメールを送信する。
 
@@ -102,9 +102,13 @@ class Email:
         self.body.replace("\n", "<br>")
         
         msg.attach(MIMEText(self.body, "html"))
-        img_data = open(BASE_DIR+'\\static\\images\\qrcode.png', 'rb')
-        msg.attach(MIMEImage(img_data.read()))
-
+        try:
+            img_data = open(BASE_DIR+'\\static\\images\\qrcode.png', 'rb')
+            msg.attach(MIMEImage(img_data.read()))
+        except IndexError as e:
+            return e
+        except IOError as e:
+            return e
         msg["Subject"] = self.subject
         msg["From"] = self.ID
         msg["To"] = sender_email_address
@@ -117,9 +121,13 @@ class Email:
 
         server.quit()
 
+        return None
+
 
 if __name__ == '__main__':
     text_subject = "テスト送信"
     text_body = "BMSシステム内の、メール送信機能のテストです。\nQRコードが添付されていれば成功です。"
-    email = Email(Subject=text_subject, body=text_body, id="", password="")  # 送信元のメールアドレス、パスワードを記入
-    email.send_email("")  # 送信先のメールアドレスを記入
+    email = Email(Subject=text_subject, body=text_body, id="r.arihara.sys20sub@gmail.com", password="111000oooiii")  # 送信元のメールアドレス、パスワードを記入
+    return_value = email.send_email("r.arihara.sys20@morijyobi.ac.jp")  # 送信先のメールアドレスを記入
+    if return_value is not None:
+        print("エラー: メール送信時にエラーが発生しました\n", return_value)
