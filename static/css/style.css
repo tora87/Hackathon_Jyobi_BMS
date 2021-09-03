@@ -37,6 +37,11 @@ input {
   background: rgb(240, 240, 240);
 }
 
+.page-title {
+  margin: 50px 0 0;
+  text-align: center;
+}
+
 /* template.html */
 
 .header {
@@ -61,13 +66,18 @@ input {
 }
 
 /* home.html */
-.container.home {
+.container.home,
+.container.edit {
   width: 50%;
   margin: 0 auto;
   height: calc(100vh - 80px);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.container.edit {
+  align-items: flex-start;
 }
 
 .home-items {
@@ -133,4 +143,21 @@ input {
 
 label {
   vertical-align: middle;
+}
+
+/* edit.html */
+.form-edit {
+  margin-top: 50px;
+}
+
+.form-item {
+  margin-bottom: 20px;
+}
+
+.form-edit > .flex-wrapper {
+  justify-content: flex-end;
+}
+
+.form-edit > .flex-wrapper > .btn {
+  margin-left: 20px;
 }
