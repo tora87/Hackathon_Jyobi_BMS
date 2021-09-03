@@ -8,22 +8,15 @@ from email.mime.multipart import MIMEMultipart
 
 
 # 有原 担当
-qr = Blueprint('create_qr', __name__)
+qr = Blueprint('create_qr', __name__, url_prefix='/generate-qr')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\Hackathon_Jyobi_BMS\\"
 
 
+# url http://127.0.0.1:5000/generate-qr/
 @qr.route('/')
-def make_qr(request):
-    if request.method == 'get':
-        print('this is login page.')
-        return render_template('qr.html')
-    elif request.method == 'post':
-        student_id = request.form.post['student_id']
-        student_name = request.form.post['student_name']
-        qr_code = makeQR()
-        qr_code.generate_qr_code(student_id=student_id, student_name=student_name)
-        return render_template('qr.html')
+def make_qr():
+    return render_template('qr.html')
 
 
 class makeQR:
