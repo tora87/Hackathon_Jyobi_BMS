@@ -125,9 +125,10 @@ class Email:
 
 
 if __name__ == '__main__':
-    text_subject = "テスト送信"
-    text_body = "BMSシステム内の、メール送信機能のテストです。\nQRコードが添付されていれば成功です。"
-    email = Email(Subject=text_subject, body=text_body, id="r.arihara.sys20sub@gmail.com", password="111000oooiii")  # 送信元のメールアドレス、パスワードを記入
-    return_value = email.send_email("r.arihara.sys20@morijyobi.ac.jp")  # 送信先のメールアドレスを記入
-    if return_value is not None:
-        print("エラー: メール送信時にエラーが発生しました\n", return_value)
+    # text_subject = "テスト送信" text_body = "BMSシステム内の、メール送信機能のテストです。\nQRコードが添付されていれば成功です。" email = Email(
+    # Subject=text_subject, body=text_body, id="r.arihara.sys20sub@gmail.com", password="111000oooiii")  #
+    # 送信元のメールアドレス、パスワードを記入 return_value = email.send_email("r.arihara.sys20@morijyobi.ac.jp")  # 送信先のメールアドレスを記入 if
+    # return_value is not None: print("エラー: メール送信時にエラーが発生しました\n", return_value)
+
+    qr = makeQR()
+    qr.generate_qr_code(student_id='4204101', student_name="有原隆乃介")
