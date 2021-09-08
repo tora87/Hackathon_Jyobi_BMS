@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 16px;
+}
+
+a {
+  color: rgb(0,0,0);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
+}
+
+li a:hover{
+  text-decoration: underline;
+}
+
+input {
+  padding: 2px;
+  font-size: 1.4rem;
+}
+
+.btn {
+  padding: 3px 5px;
+  border: 1px solid #000;
+  background: rgb(240, 240, 240);
+}
+
+.page-title {
+  margin: 50px 0 0;
+  text-align: center;
+}
+
+/* template.html */
+
+.header {
+  background: #e1e1e1;
+}
+
+.header-wrapper {
+  height: 80px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-right-box {
+  display: flex;
+  align-items: center;
+}
+
+.header-right-box > * {
+  margin-right: 20px;
+}
+
+/* home.html */
+.container.home,
+.container.edit {
+  width: 50%;
+  margin: 0 auto;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container.edit {
+  align-items: flex-start;
+}
+
+.home-items {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.home-item {
+  width: calc(100% / 2 - 50px);
+  padding: 50px;
+  display: block;
+  background: rgb(233, 252, 255);
+  text-align: center;
+  font-size: 3rem;
+  border-radius: 10px;
+  border: 2px solid rgb(118, 231, 248);
+}
+
+.home-item:nth-child(1),
+.home-item:nth-child(2) {
+  margin-bottom: 100px;
+}
+
+/* books_list */
+.container.books_list {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.books li {
+  text-align:center;
+}
+
+.book-detail {
+  padding: 3rem;
+}
+
+.book-detail > div {
+  margin-bottom: 20px;
+}
+
+.book-detail > div:last-of-type {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.book-detail > .btn {
+  text-align: right;
+}
+
+.flex-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-item {
+  width: calc(100% / 2 - 50px);
+  padding: 3rem;
+}
+
+label {
+  vertical-align: middle;
+}
+
+/* edit.html */
+.form-edit {
+  margin-top: 50px;
+}
+
+.form-item {
+  margin-bottom: 20px;
+}
+
+.form-edit > .flex-wrapper {
+  justify-content: flex-end;
+}
+
+.form-edit > .flex-wrapper > .btn {
+  margin-left: 20px;
+}

@@ -278,8 +278,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# send QR code Bot Token
-slack_bot_token_file.py
 # generate QR Code png
 static/images/qrcode.png
 
