@@ -8,7 +8,7 @@ from add_books import books
 from lender import lend
 from create_qr import qr
 
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = "".join(random.choices(string.ascii_letters, k=256))
@@ -31,6 +31,11 @@ app.register_blueprint(lend)
 
 # qrコード
 app.register_blueprint(qr)
+
+
+@app.route('/')
+def default_transition():
+    return redirect(url_for('login_top.login_page'))
 
 
 if __name__ == '__main__':
