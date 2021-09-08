@@ -281,3 +281,5 @@ cython_debug/
 # generate QR Code png
 static/images/qrcode.png
 
+# slack bot token
+slack_bot_token_file.py
