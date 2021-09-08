@@ -28,7 +28,7 @@ def select_all_books() -> 'data or None':
     book = cur.fetchall()
 
     cur.close()
-    conn.commit()
+    # conn.commit()
     conn.close()
 
     return book
@@ -60,7 +60,7 @@ def insert_specify_book (book_number: 'int', user_number: 'int',) -> 'bool':
     sql = 'insert into rental(user_number, books_jancord, return_day, status_flg) values(%s, %s, %s, 1)'
     flg = True
     try:
-        cur.execute(sql,(user_number, book_number, date_limit,))
+        cur.execute(sql, (user_number, book_number, date_limit,))
     except Exception as e:
         print('SQL実行に失敗しました:', e)
         flg = False
@@ -142,5 +142,4 @@ if __name__ == '__main__':
     # else:
     #     print('query not appropriate')
 
-    print('check all query \n system all clean')
-
+    print('check all query \n system all green')

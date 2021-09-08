@@ -12,16 +12,16 @@
     <input type="text" name="name" id="name" value="none..." disabled="false">
   </form>
 
-  {% if books_json %}
+  {% if books_json is defined %}
 
-    {% for book in books_json }
+    {% for book in books_json %}
       <p>{{ book.name }}</p>
       <p>{{ book.author }}</p>
       <p>{{ book.amount }}</p>
       <p>{{ book.stock }}</p>
-    {% end for %}
+    {% endfor %}
 
-  {% end if %}
+  {% endif %}
 
   <script type="text/javascript" src="../static/js/quagga.min.js" type="module"></script>
   <script src="../static/js/lender.js" type="module"></script>
