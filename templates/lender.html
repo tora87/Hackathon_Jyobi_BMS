@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jyobi-BMS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.1, maximum-scale=4,user-scalable=yes">
+
 </head>
 <body>
-  
+  <div id="interactive"></div>
+
+  <form action="/lender" method="POST" id="sendForm">
+    <input type="text" name="name" id="name" value="none..." disabled="false">
+  </form>
+
+  {% if books_json %}
+
+    {% for book in books_json }
+      <p>{{ book.name }}</p>
+      <p>{{ book.author }}</p>
+      <p>{{ book.amount }}</p>
+      <p>{{ book.stock }}</p>
+    {% end for %}
+
+  {% end if %}
+
+  <script type="text/javascript" src="../static/js/quagga.min.js" type="module"></script>
+  <script src="../static/js/lender.js" type="module"></script>
 </body>
 </html>
