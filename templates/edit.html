@@ -1,45 +1,31 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/css/style.css">
-  <title>Jyobi-BMS</title>
-</head>
-<body>
-  <header class="header">
-    <div class="header-wrapper">
-      <h1 class="logo"><a href="#">Jyobi-BMS</a></h1>
-      <div class="header-right-box">
-        <div class="user_info">
-          <div class="user_number">学籍番号：4100001</div>
-          <div class="user_name">生徒名：ジョビ君</div>
-        </div>
-        <a href="#" class="btn">ログアウト</a>
-      </div>
-    </div>
-  </header>
-  <h2 class="page-title">編集画面</h2>
+{% extends 'template.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="../../static/css/style.css">
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title">編集画面</h2>
   <div class="container edit">
-    <form action="" class="form-edit">
+    <form method='POST' class="form-edit">
       <div class="form-item">
-        <label for="name">作品名&emsp;&emsp;：</label><input type="text" id="name" value="ワンピース">
+        <label for="name">作品名&emsp;&emsp;：</label><input type="text" id="name" name="name" value="{{sel_book_detail[1]}}">
       </div>
       <div class="form-item">
-        <label for="author">著者名&emsp;&emsp;：</label><input type="text" id="author" value="尾田栄一郎">
+        <label for="author">著者名&emsp;&emsp;：</label><input type="text" id="author" name="author" value="{{sel_book_detail[2]}}">
       </div>
       <div class="form-item">
-        <label for="stock">在庫&emsp;&emsp;&emsp;：</label><input type="number" id="stock" value="5">
-      </div>
-      <div class="form-item">
-        <label for="lentalable">貸出可能数：</label><input type="number" id="lentalable" value="1">
+        <label for="stock">在庫&emsp;&emsp;&emsp;：</label><input type="number" id="stock" name="stock" min={{sel_book_detail[3]-sel_book_detail[4]}} value="{{sel_book_detail[3]}}">
       </div>
       <div class="buttons flex-wrapper">
-        <button class="btn delete" type="submit" formaction="">削除</button>
-        <button class="btn cancel" type="submit" formaction="">取り消し</button>
-        <button class="btn edit" type="submit" formaction="">変更する</button>
+        {% if sel_book_detail[3] != sel_book_detail[4]  %}
+        <button class="btn delete" type="submit" disabled>削除</button>
+        {% else %}
+        <button class="btn delete" type="submit" formaction="{{url_for('booklist_view.delete_detail',jancord=jancord)}}">削除</button>
+        {% endif %}
+        <button class="btn cancel" type="submit" formaction="{{url_for('booklist_view.detail_view',jancord=jancord)}}">取り消し</button>
+        <button class="btn edit" type="submit" formaction="{{url_for('booklist_view.update_detail',jancord=jancord)}}">変更する</button>
       </div>
     </form>
   </div>
-</body>
-</html>
+{% endblock %}
