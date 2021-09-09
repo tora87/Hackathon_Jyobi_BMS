@@ -1,6 +1,5 @@
 from flask import Flask, Blueprint, render_template, session, request, redirect, url_for
 
-import lender
 from databases import lender_db
 
 # 有原 担当
@@ -26,23 +25,30 @@ def get_lender():
 
 
 # 一つの関数で貸出、返却処理することになるかも
+# 一つの関数で処理する場合、input:radio等で分岐すると思われるので、
+# request.form.get('radio_id') で取得して、if で分岐させる
 @lend.route('lend', methods=['POST'])
 def lend_process():
     # 貸出処理
     # 受け取ったデータから、本のisbnコードを受け取る
     # 学籍番号を、sessionから取得する
-    user_id = session['user_id']
-    isbn = request.form.get('isbn')
+    user_id = session['user_id']  # integer
+    jan = request.form.get('jan')
+
+    jan = is_integer(jan)
+    if not jan:
+        # 受け取った値がFalseの場合
+        return redirect(url_for('lender.get_lender'))
 
     # 受け取ったデータをdbに登録する
-    flg = lender_db.insert_specify_book(user_number=user_id, book_number=isbn)
+    flg = lender_db.insert_specify_book(user_number=user_id, book_number=jan)
 
     if flg:
         print('ok')
     else:
         print('couldn\'t lend')
 
-    return redirect(url_for('lend.get_lender'))
+    return redirect(url_for('lender.get_lender'))
 
 
 @lend.route('return', methods=['POST'])
@@ -51,18 +57,41 @@ def return_process():
     # 受け取ったデータから、本のisbnコードを受け取る
     # 学籍番号を、sessionから取得する
     user_id = session['user_id']
-    isbn = request.form.get('isbn')
-    
+    jan = request.form.get('jan')
+
+    jan = is_integer(jan)
+    if not jan:
+        # 受け取った値がFalseの場合
+        return redirect(url_for('lender.get_lender'))
+
     # 受け取ったデータをdbに登録する
-    flg = lender_db.update_return_book(user_number=user_id, book_number=isbn)
-    
+    flg = lender_db.update_return_book(user_number=user_id, book_number=jan)
+
     if flg:
         print('ok')
     else:
         print('couldn\'t return')
-        
+
     return redirect(url_for('lend.get_lender'))
 
 
-# @lend.route('/', method='POST')
-# def post_lender():
+def is_integer(s: 'str'):
+    """
+    引数で受け取った値が１０進数の整数値に変換可能か判定する。変換可能ならば、変換して値を返す。
+
+    Parameters
+    ---------
+    s : string
+        判定する文字列
+
+    Return
+    ---------
+    data : False or integer
+        変換不可能ならFalse, 変換可能なら返還後の整数値
+    """
+    try:
+        int(s, 10)
+    except ValueError as e:
+        return False
+    else:
+        return int(s, 10)
