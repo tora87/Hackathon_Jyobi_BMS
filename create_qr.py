@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, redirect, request
+from flask import Flask, Blueprint, render_template, redirect, request, url_for
 import qrcode
 import os
 from smtplib import SMTP
@@ -54,7 +54,7 @@ def send_qr():
     if flg:
         return render_template('home.html')  # ホーム画面を表示する処理を作成次第、そちらへ変更する
     else:
-        return redirect('create_qr.make_qr')
+        return redirect(url_for('create_qr.make_qr'))
 
 
 class makeQR:
