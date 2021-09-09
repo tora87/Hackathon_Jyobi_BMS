@@ -1,46 +1,82 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/css/style.css">
-  <title>Jyobi-BMS</title>
-</head>
-<body>
-  <header class="header">
-    <div class="header-wrapper">
-      <h1 class="logo"><a href="#">Jyobi-BMS</a></h1>
-      <div class="header-right-box">
-        <div class="user_info">
-          <div class="user_number">学籍番号：4100001</div>
-          <div class="user_name">生徒名：ジョビ君</div>
+{% extends 'template.html' %}
+
+{% block css %}
+{% endblock %}
+
+
+{% block title %}
+-図書一覧
+{% endblock %}
+
+
+{% block content %}
+    <div class="container books_list">
+        <div class="flex-wrapper">
+            <ul class="books flex-item">
+                {% if books_all_table|length!=0 %}
+                <!-- 動的に増える部分 -->
+                {% for book in books_all_table %}
+                <li>
+                    <a
+                        href="{{url_for('booklist_view.detail_view',jancord=book[0])}}"
+                    >
+                        {{book[1]}}
+                    </a>
+                </li>
+                {% endfor %} {% else %}
+                <p>該当なし</p>
+                {% endif %}
+            </ul>
+            <div class="book-detail flex-item">
+                {% if sel_book_detail|length!=0 %}
+                <div>
+                    <label for="name">作品名　　　：</label
+                    ><input
+                        type="text"
+                        id="name"
+                        value="{{sel_book_detail[1]}}"
+                        readonly
+                    />
+                </div>
+                <div>
+                    <label for="author">著者名　　　：</label
+                    ><input
+                        type="text"
+                        id="author"
+                        value="{{sel_book_detail[2]}}"
+                        readonly
+                    />
+                </div>
+                <div>
+                    <label for="totallable">図書在庫総数：</label
+                    ><input
+                        type="number"
+                        id="totallable"
+                        value="{{sel_book_detail[3]}}"
+                        readonly
+                    />
+                </div>
+                <div>
+                    <label for="lentalable">貸出可能数　：</label
+                    ><input
+                        type="number"
+                        id="lentalable"
+                        value="{{sel_book_detail[4]}}"
+                        readonly
+                    />
+                </div>
+                <div> <!--? 管理者機能_編集 -->
+                    {% if session.get('auth_flag', true) == true  %} <!--? session.getの第二引数は初期値、nullの場合はfalseとして扱う -->
+                        <a href="{{url_for('booklist_view.edit_view',jancord=sel_book_detail[0])}}" class="btn edit">編集</a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <p>図書選択で詳細表示</p>
+                {% endif %}
+            </div>
         </div>
-        <a href="#" class="btn">ログアウト</a>
-      </div>
     </div>
-  </header>
-  <div class="container books_list">
-    <div class="flex-wrapper">
-      <ul class="books flex-item">
-        <!-- 動的に増える部分 -->
-        <li><a href="#">book name1</a></li>
-        <li><a href="#">book name2</a></li>
-        <li><a href="#">book name3</a></li>
-        <li><a href="#">book name4</a></li>
-      </ul>
-      <div class="book-detail flex-item">
-        <div>
-          <label for="name">作品名　　：</label><input type="text" id="name" value="ワンピース" readonly>
-        </div>
-        <div>
-          <label for="author">著者名　　：</label><input type="text" id="author" value="尾田栄一郎" readonly>
-        </div>
-        <div>
-          <label for="lentalable">貸出可能数：</label><input type="number" id="lentalable" value="1" readonly>
-        </div>
-        <div><a href="edit.html" class="btn edit">編集</a></div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
