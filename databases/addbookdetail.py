@@ -5,7 +5,7 @@ def connect_db():
     conn = MySQLdb.connect(
         host = '127.0.0.1',
         user = 'root',
-        passwd = 'kodama1381',
+        passwd = 'パスワード',
         db = 'jyobi_bms',
         charset = 'utf8'
     )
