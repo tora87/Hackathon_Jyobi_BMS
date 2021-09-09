@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template
+from flask import Flask, Blueprint, render_template, redirect, request
 import qrcode
 import os
 from smtplib import SMTP
@@ -6,6 +6,8 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
+from databases import create_qr_db
+import slack_send_message
 
 # 有原 担当
 qr = Blueprint('create_qr', __name__, url_prefix='/generate-qr')
@@ -14,15 +16,52 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\Hack
 
 
 # url http://127.0.0.1:5000/generate-qr/
-@qr.route('/')
+# qrコード送信時、
+# qr = makeQR()
+# qr.generate_qr_code(student_id='any', student_name="any")
+# flg = slack_send_message.send_message_for_email(message_list = [
+#         {"email": "your_email_address@morijyobi.ac.jp", "message": "any message for send"}
+#     ]
+# )
+
+@qr.route('/', methods=['GET'])
 def make_qr():
-    return render_template('qr.html')
+    user_data = create_qr_db.select_all_user()
+    user_list = []
+    for array in user_data:
+        user_list.append({
+            'user_id': array[0],
+            'name': array[1],
+            'email': array[2],
+        })
+    return render_template('qr.html', user_data=user_list)
+
+
+@qr.route('/', methods=['POST'])
+def send_qr():
+    # クライアント側から送られてきたデータから、選択されたユーザの学籍番号(student_id)を取得する
+    user = request.form.get('user_id')
+    user_id = 4204101  # テスト用
+    user_data = create_qr_db.select_for_generation_user_data(student_id=int(user_id))
+
+    qr = makeQR()
+    qr.generate_qr_code(student_id=int(user_data[0]), student_name=str(user_data[1]))
+
+    flg = slack_send_message.send_message_for_email(mail_message=[
+        {"email": user_data[2], "message": "新たに生成されたQRコードです。\n次回ログインからはこちらを使用してください。"}
+    ])
+
+    if flg:
+        return render_template('home.html')  # ホーム画面を表示する処理を作成次第、そちらへ変更する
+    else:
+        return redirect('create_qr.make_qr')
 
 
 class makeQR:
     """
     任意のデータを含んだQRコードを生成する
     """
+
     def __init__(self):
         self.output = BASE_DIR + '/static/images/qrcode.png'
         self.qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_Q, box_size=10, border=4, )
@@ -38,7 +77,7 @@ class makeQR:
         kwargs['student_name'] : string
             対象の生徒の名前。
         """
-        self.qr.add_data(kwargs['student_id'] + '+' + kwargs['student_name'])
+        self.qr.add_data(str(kwargs['student_id']) + '+' + str(kwargs['student_name']))
         self.qr.make(fit=True)
         img = self.qr.make_image(fill_color="black", back_color="white")
         img.save(self.output)
@@ -48,6 +87,7 @@ class Email:
     """
     QRコードを添付したhtmlメールを送信する
     """
+
     def __init__(self, **kwargs):
         """
         コンストラクタ
@@ -93,10 +133,10 @@ class Email:
         """
         msg = MIMEMultipart()
         self.body.replace("\n", "<br>")
-        
+
         msg.attach(MIMEText(self.body, "html"))
         try:
-            img_data = open(BASE_DIR+'\\static\\images\\qrcode.png', 'rb')
+            img_data = open(BASE_DIR + '\\static\\images\\qrcode.png', 'rb')
             msg.attach(MIMEImage(img_data.read()))
         except IndexError as e:
             return e
@@ -118,9 +158,10 @@ class Email:
 
 
 if __name__ == '__main__':
-    text_subject = "テスト送信"
-    text_body = "BMSシステム内の、メール送信機能のテストです。\nQRコードが添付されていれば成功です。"
-    email = Email(Subject=text_subject, body=text_body, id="r.arihara.sys20sub@gmail.com", password="111000oooiii")  # 送信元のメールアドレス、パスワードを記入
-    return_value = email.send_email("r.arihara.sys20@morijyobi.ac.jp")  # 送信先のメールアドレスを記入
-    if return_value is not None:
-        print("エラー: メール送信時にエラーが発生しました\n", return_value)
+    # text_subject = "テスト送信" text_body = "BMSシステム内の、メール送信機能のテストです。\nQRコードが添付されていれば成功です。" email = Email(
+    # Subject=text_subject, body=text_body, id="r.arihara.sys20sub@gmail.com", password="111000oooiii")  #
+    # 送信元のメールアドレス、パスワードを記入 return_value = email.send_email("r.arihara.sys20@morijyobi.ac.jp")  # 送信先のメールアドレスを記入 if
+    # return_value is not None: print("エラー: メール送信時にエラーが発生しました\n", return_value)
+
+    qr = makeQR()
+    qr.generate_qr_code(student_id='4204101', student_name="有原隆乃介")
