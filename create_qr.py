@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, redirect, request, url_for
+from flask import Flask, Blueprint, render_template, redirect, request, url_for, session
 import qrcode
 import os
 from smtplib import SMTP
@@ -26,35 +26,41 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\Hack
 
 @qr.route('/', methods=['GET'])
 def make_qr():
-    user_data = create_qr_db.select_all_user()
-    user_list = []
-    for array in user_data:
-        user_list.append({
-            'user_id': array[0],
-            'name': array[1],
-            'email': array[2],
-        })
-    return render_template('qr.html', user_data=user_list)
+    if 'user_id' in session:
+        user_data = create_qr_db.select_all_user()
+        user_list = []
+        for array in user_data:
+            user_list.append({
+                'user_id': array[0],
+                'name': array[1],
+                'email': array[2],
+            })
+        return render_template('qr.html', user_data=user_list)
+    else:
+        return redirect(url_for('login_top.login_page'))
 
 
 @qr.route('/', methods=['POST'])
 def send_qr():
-    # クライアント側から送られてきたデータから、選択されたユーザの学籍番号(student_id)を取得する
-    user = request.form.get('user_id')
-    user_id = 4204101  # テスト用
-    user_data = create_qr_db.select_for_generation_user_data(student_id=int(user_id))
+    if 'user_id' in session:
+        # クライアント側から送られてきたデータから、選択されたユーザの学籍番号(student_id)を取得する
+        user = request.form.get('user_id')
+        user_id = 4204101  # テスト用
+        user_data = create_qr_db.select_for_generation_user_data(student_id=int(user_id))
 
-    qr = makeQR()
-    qr.generate_qr_code(student_id=int(user_data[0]), student_name=str(user_data[1]))
+        qr = makeQR()
+        qr.generate_qr_code(student_id=int(user_data[0]), student_name=str(user_data[1]))
 
-    flg = slack_send_message.send_message_for_email(mail_message=[
-        {"email": user_data[2], "message": "新たに生成されたQRコードです。\n次回ログインからはこちらを使用してください。"}
-    ])
+        flg = slack_send_message.send_message_for_email(mail_message=[
+            {"email": user_data[2], "message": "新たに生成されたQRコードです。\n次回ログインからはこちらを使用してください。"}
+        ])
 
-    if flg:
-        return render_template('home.html')  # ホーム画面を表示する処理を作成次第、そちらへ変更する
+        if flg:
+            return render_template('home.html')  # ホーム画面を表示する処理を作成次第、そちらへ変更する
+        else:
+            return redirect(url_for('create_qr.make_qr'))
     else:
-        return redirect(url_for('create_qr.make_qr'))
+        return redirect(url_for('login_top.login_page'))
 
 
 class makeQR:
