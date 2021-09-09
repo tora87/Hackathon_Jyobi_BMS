@@ -1,19 +1,31 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jyobi-BMS</title>
-</head>
-<body>
+{% extends 'template.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="../../static/css/style.css">
+{% endblock %}
+
+{% block content %}
   <h2 class="page-title">追加画面</h2>
   <div class="container add_books">
     <div class="flex-wrapper">
       <div></div>
-      <form action="" class="form-add">
+      <form action="{{url_for('add_books.add_books')}}" method='POST' class="form-add">
+        {% if error!=0 or success!=0 %}
+          <div class="form-item">
+          {% if error == 1 %}
+		  	    <p>追加に失敗しました。</p>
+	    	  {% elif error == 2 %}
+	    	    <p>そのJANコードは既に登録されています</p>
+	        {% endif %}
+	    	  
+          {% if success == 1 %}
+	    	    <p>登録しました。</p>
+	    	  {% endif %}
+          </div>
+        {% endif %}
         <div class="form-item">
           <label for="book-name">JANコード</label>
-          <input type="number" name="book-name" id="book-name">
+          <input type="number" name="jancord" id="jancord" readonly>
         </div>
         <div class="form-item">
           <label for="book-name">図書名</label>
@@ -31,5 +43,4 @@
       </form>
     </div>
   </div>
-</body>
-</html>
+{% endblock %}
