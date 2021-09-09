@@ -31,6 +31,7 @@ def login_process():
 
     # 取得したデータをsessionに保存する
     session['user_id'] = user_id
+    session['user_name'] = user_name
     return redirect(url_for('login_top.top_page'))
 
 
