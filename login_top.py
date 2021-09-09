@@ -39,3 +39,9 @@ def login_process():
 def top_page():
     # トップページを表示するのに必要な処理
     return render_template('home.html')
+
+
+@log_top.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login_top.login_page'))

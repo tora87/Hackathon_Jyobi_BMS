@@ -12,7 +12,7 @@
     <input type="text" name="name" id="name" value="none..." disabled="false">
   </form>
 
-  {% if books_json %}
+  {% if books_json is defined %}
 
     {% for book in books_json %}
       <p>{{ book.name }}</p>
