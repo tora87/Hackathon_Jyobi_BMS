@@ -10,6 +10,7 @@ lend = Blueprint('lender', __name__, url_prefix='/lend-return')
 @lend.route('/')
 def get_lender():
     # 最初にページを読み込むときに、すでに本の一覧を表示する
+    # 本のjanコードを読み込んだ際に情報を表示するように変更するなら、下記のコードは必要ない
     book = lender_db.select_all_books()
     book_data = []
     for array in book:
@@ -24,10 +25,43 @@ def get_lender():
     return render_template('lender.html', books_json=book_data)
 
 
+# ajaxで本を読み込んだ際、
+# let jan = $("#jan").val();  # janコードを取得
+# $.ajax({
+#     "type": 'POST',
+#     "url": '/lend-return/search',
+#     "data": {'jan': jan }
+# })
+# みたいな書き方で、下記の処理にアクセスできる
+@lend.route('/search', methods=['POST'])
+def get_book():
+    jan = request.form['jan']
+    jan = is_integer(jan)
+    if not jan:
+        return redirect(url_for('lender.get_lender'))
+
+    book = lender_db.select_specify_books(book_id=jan)
+
+    if book is None:
+        return redirect(url_for('lender.get_lender'))
+
+    book_data = []
+    for array in book:
+        book_data.append({
+            'book_id': array[0],
+            'name': array[1],
+            'author': array[2],
+            'amount': array[3],
+            'stock': array[3] - array[4] if array[4] is not None else array[3],
+        })
+
+    return render_template('lender.html', books_json=book_data)
+
+
 # 一つの関数で貸出、返却処理することになるかも
 # 一つの関数で処理する場合、input:radio等で分岐すると思われるので、
 # request.form.get('radio_id') で取得して、if で分岐させる
-@lend.route('lend', methods=['POST'])
+@lend.route('/lend', methods=['POST'])
 def lend_process():
     # 貸出処理
     # 受け取ったデータから、本のisbnコードを受け取る
@@ -51,7 +85,7 @@ def lend_process():
     return redirect(url_for('lender.get_lender'))
 
 
-@lend.route('return', methods=['POST'])
+@lend.route('/return', methods=['POST'])
 def return_process():
     # 返却処理
     # 受け取ったデータから、本のisbnコードを受け取る

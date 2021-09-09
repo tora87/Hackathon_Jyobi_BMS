@@ -34,6 +34,42 @@ def select_all_books() -> 'data or None':
     return book
 
 
+def select_specify_books(book_id: 'int') -> 'data or None':
+    """
+    BDに登録されている情報と現在の借りられている冊数を返す
+
+    Parameters
+    ----------
+    book_id : integer
+        検索する本のjanコード
+
+    Returns
+    ----------
+    data: tuple (tuple1, tuple2, tuple3...)
+        登録された情報と、現在借りられている冊数
+    data[any]: tuple (jancord, title, author, amount, count)
+        janコード、タイトル、著者、数量、現在の貸出数
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+
+    sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord where jancord = %s'
+
+    try:
+        cur.execute(sql, (book_id,))
+    except Exception as e:
+        print('SQL実行に失敗しました:', e)
+        return None
+
+    book = cur.fetchone()
+
+    cur.close()
+    # conn.commit()
+    conn.close()
+
+    return book
+
+
 def insert_specify_book (book_number: 'int', user_number: 'int',) -> 'bool':
     """
     借りる本のjanコードと、借りる生徒の学籍番号を渡すと、rentalテーブルにレコードを追加する
@@ -127,8 +163,8 @@ def get_connection():
 
 
 if __name__ == '__main__':
-    # record = select_all_books()
-    # print(record)
+    record = select_specify_books(book_id=2013031003351)
+    print(record)
     
     # flg = insert_specify_book(book_number='2013031003351', user_number='4204101')
     # if flg:
@@ -142,4 +178,4 @@ if __name__ == '__main__':
     # else:
     #     print('query not appropriate')
 
-    print('check all query \n system all green')
+    # print('check all query \n system all green')
