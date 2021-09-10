@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   {% block css %}{% endblock %}
   {% block script %}{% endblock %}
   <title>Jyobi-BMS</title>
@@ -11,16 +12,29 @@
 <body>
   <header class="header">
     <div class="header-wrapper">
-      <h1 class="logo"><a href="#">Jyobi-BMS</a></h1>
-      <div class="header-right-box">
-        <div class="user_info">
-          <div class="user_number">学籍番号：4100001</div>
-          <div class="user_name">生徒名：ジョビ君</div>
+      <div class="header-wrapper-left">
+        <h1 class="logo"><a href="home.html">Jyobi-BMS</a></h1>
+        <nav class="header-nav">
+          <ul>
+            <li class="header-nav-item"><a href="books_list.html">一覧</a></li>
+            <li class="header-nav-item"><a href="add_books.html">追加</a></li>
+            <li class="header-nav-item"><a href="qr.html">QR作成</a></li>
+            <li class="header-nav-item"><a href="lender.html">借りる</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="header-wrapper-right">
+        <div class="user-info">
+          <div class="user-number">学籍番号：4100001</div>
+          <div class="user-name">生徒名&emsp;：ジョビ君</div>
         </div>
-        <a href="#" class="btn">ログアウト</a>
+        <a href="home.html" class="btn">ログアウト</a>
       </div>
     </div>
   </header>
+  <div class="header-bottom">
+    <div class="back-btn back" onclick="history.back()"><a href="" onclick="history.back(-1);return false;"><i class="fas fa-arrow-left"></i></a></div>
+  </div>
   {% block content %}
 
   {% endblock%}
