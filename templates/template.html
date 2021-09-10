@@ -16,10 +16,10 @@
         <h1 class="logo"><a href="home.html">Jyobi-BMS</a></h1>
         <nav class="header-nav">
           <ul>
-            <li class="header-nav-item"><a href="books_list.html">一覧</a></li>
-            <li class="header-nav-item"><a href="add_books.html">追加</a></li>
-            <li class="header-nav-item"><a href="qr.html">QR作成</a></li>
-            <li class="header-nav-item"><a href="lender.html">借りる</a></li>
+            <li class="header-nav-item"><a href="{{url_for('booklist_view.booklist_view')}}">一覧</a></li>
+            <li class="header-nav-item"><a href="{{url_for('add_books.add_books')}}">追加</a></li>
+            <li class="header-nav-item"><a href="{{url_for('create_qr.make_qr')}}">QR作成</a></li>
+            <li class="header-nav-item"><a href="{{url_for('lender.get_lender')}}">借りる</a></li>
           </ul>
         </nav>
       </div>
@@ -28,12 +28,12 @@
           <div class="user-number">学籍番号：4100001</div>
           <div class="user-name">生徒名&emsp;：ジョビ君</div>
         </div>
-        <a href="home.html" class="btn">ログアウト</a>
+        <a href="{{url_for('login_top.logout')}}" class="btn">ログアウト</a>
       </div>
     </div>
   </header>
   <div class="header-bottom">
-    <div class="back-btn back" onclick="history.back()"><a href="" onclick="history.back(-1);return false;"><i class="fas fa-arrow-left"></i></a></div>
+    <div class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
   </div>
   {% block content %}
 
