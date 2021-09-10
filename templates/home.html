@@ -1,31 +1,13 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/css/style.css">
-  <title>Jyobi-BMS</title>
-</head>
-<body>
-  <header class="header">
-    <div class="header-wrapper">
-      <h1 class="logo"><a href="#">Jyobi-BMS</a></h1>
-      <div class="header-right-box">
-        <div class="user_info">
-          <div class="user_number">学籍番号：{{ session['user_id'] }}</div>
-          <div class="user_name">生徒名：{{ session['user_name'] }}</div>
-        </div>
-        <a href="#" class="btn">ログアウト</a>
-      </div>
-    </div>
-  </header>
-  <div class="container">
+{% extends 'template.html' %}
+
+{% block content %}
+  <h2 class="page-title">ホーム画面</h2>
+  <div class="container home">
     <div class="home-items">
-      <a href="books_list.html" class="home-item">一覧</a>
-      <a href="#" class="home-item">追加</a>
-      <a href="#" class="home-item">QR作成</a>
-      <a href="#" class="home-item">貸借</a>
+      <a href="{{url_for('booklist_view.booklist_view')}}" class="home-item">一覧</a>
+      <a href="{{url_for('add_books.add_books')}}" class="home-item">追加</a>
+      <a href="{{url_for('create_qr.make_qr')}}" class="home-item">QR作成</a>
+      <a href="{{url_for('lender.get_lender')}}" class="home-item">貸借</a>
     </div>
   </div>
-</body>
-</html>
+{% endblock %}
