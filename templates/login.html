@@ -28,10 +28,10 @@
       <canvas id="mycanvas"></canvas>
     </div>
     <p>
-      <form id="stInformation" enctype="multipart/form-data" action="/login-top" method="POST">
+      <form id="stInformation" enctype="multipart/form-data" action="{{url_for('login_top.login_process')}}" method="POST">
         <input type="file" accept="image/*" capture="camera" name="file" id="file-image"/></br>
-        <div><a>学籍番号 : <input type="text" id=studentNumber disabled="false"></div>
-        <div><a>氏名 : <input type="text" id=studentName disabled="false"></div>
+        <div>学籍番号 : <input type="text" id=studentNumber name="user_id" readonly></div>
+        <div>氏名 : <input type="text" id=studentName name="user_name" readonly></div>
         <div><input type="submit" value="ログイン"></div>
       </form>
     </p>
