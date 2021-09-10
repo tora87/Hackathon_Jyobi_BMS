@@ -12,8 +12,8 @@
       <h1 class="logo"><a href="#">Jyobi-BMS</a></h1>
       <div class="header-right-box">
         <div class="user_info">
-          <div class="user_number">学籍番号：4100001</div>
-          <div class="user_name">生徒名：ジョビ君</div>
+          <div class="user_number">学籍番号：{{ session['user_id'] }}</div>
+          <div class="user_name">生徒名：{{ session['user_name'] }}</div>
         </div>
         <a href="#" class="btn">ログアウト</a>
       </div>
