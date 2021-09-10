@@ -25,8 +25,8 @@
       </div>
       <div class="header-wrapper-right">
         <div class="user-info">
-          <div class="user-number">学籍番号：4100001</div>
-          <div class="user-name">生徒名&emsp;：ジョビ君</div>
+          <div class="user-number">学籍番号：{{ session['user_id'] }}</div>
+          <div class="user-name">生徒名&emsp;：{{ session['user_name'] }}</div>
         </div>
         <a href="home.html" class="btn">ログアウト</a>
       </div>
