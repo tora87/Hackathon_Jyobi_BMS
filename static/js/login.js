@@ -78,11 +78,11 @@ function checkQRCode(){
     const code = jsQR( imageData.data, canvas.width, canvas.height );
     if( code ){
         const bytes = code.binaryData;
-        const text_decoder = new TextDecoder('shift-jis');
+        const text_decoder = new TextDecoder('utf-8');
         const str = text_decoder.decode(Uint8Array.from(bytes).buffer);
         alert( str );
 
-        const splitStr = str.split(",");
+        const splitStr = str.split("+");
 
         student_number.value = splitStr[0];
         student_name.value = splitStr[1];
