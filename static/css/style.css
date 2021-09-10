@@ -56,6 +56,17 @@ input {
   align-items: center;
 }
 
+.header-wrapper-left,
+.header-wrapper-right{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-wrapper-right > .user-info{
+  margin-right: 40px;
+}
+
 .header-nav ul {
   display: flex;
   justify-content: space-between;
@@ -78,6 +89,10 @@ input {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+i.fas {
+  font-size:40px ;
 }
 
 /* home.html */
