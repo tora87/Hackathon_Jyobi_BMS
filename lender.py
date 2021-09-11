@@ -13,18 +13,18 @@ def get_lender():
         return redirect("/")
     # 最初にページを読み込むときに、すでに本の一覧を表示する
     # 本のjanコードを読み込んだ際に情報を表示するように変更するなら、下記のコードは必要ない
-    book = lender_db.select_all_books()
-    book_data = []
-    for array in book:
-        book_data.append({
-            'book_id': array[0],
-            'name': array[1],
-            'author': array[2],
-            'amount': array[3],
-            'stock': array[3] - array[4] if array[4] is not None else array[3],
-        })
-    print(book_data)
-    return render_template('lender.html', books_json=book_data)
+    # book = lender_db.select_all_books()
+    # book_data = []
+    # for array in book:
+    #     book_data.append({
+    #         'book_id': array[0],
+    #         'name': array[1],
+    #         'author': array[2],
+    #         'amount': array[3],
+    #         'stock': array[3] - array[4] if array[4] is not None else array[3],
+    #     })
+    # print(book_data)
+    return render_template('lender.html')
 
 
 # ajaxで本を読み込んだ際、
@@ -50,15 +50,17 @@ def get_book():
         return redirect(url_for('lender.get_lender'))
 
     book_data = []
-    for array in book:
-        book_data.append({
-            'book_id': array[0],
-            'name': array[1],
-            'author': array[2],
-            'amount': array[3],
-            'stock': array[3] - array[4] if array[4] is not None else array[3],
-        })
-
+    if book[4] is not None:
+        stock = int(book[3]) - int(book[4])
+    else:
+        stock = book[3]
+    book_data.append({
+        'book_id': book[0],
+        'name': book[1],
+        'author': book[2],
+        'amount': book[3],
+        'stock': stock,
+    })
     return render_template('lender.html', books_json=book_data)
 
 
