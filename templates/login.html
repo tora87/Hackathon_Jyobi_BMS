@@ -27,17 +27,6 @@
     <div class="canvas-wrapper">
       <canvas id="mycanvas"></canvas>
     </div>
-<<<<<<< HEAD
-    <p>
-      <form id="stInformation" enctype="multipart/form-data" action="{{url_for('login_top.login_process')}}" method="POST">
-        <input type="file" accept="image/*" capture="camera" name="file" id="file-image"/></br>
-        <div>学籍番号 : <input type="text" id=studentNumber name="user_id" readonly></div>
-        <div>氏名 : <input type="text" id=studentName name="user_name" readonly></div>
-        <div><input type="submit" value="ログイン"></div>
-      </form>
-    </p>
-    <a id="errorText"> </a>
-=======
     <form id="stInformation" enctype="multipart/form-data" action="{{url_for('login_top.login_process')}}" method="POST">
       <input class="form-item" type="file" accept="image/*" capture="camera" name="file" id="file-image"/></br>
       <div class="form-item">
@@ -48,7 +37,6 @@
       </div>
       <div class="form-item"><input type="submit" value="ログイン" class="btn"></div>
     </form>
->>>>>>> origin
   </div>
 
   <script src="//cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js"></script>
