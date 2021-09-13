@@ -37,11 +37,6 @@ input {
   font-size: 1.5rem;
 }
 
-input[type="file"] {
-  display: none;
-  cursor: pointer;
-}
-
 input[type="file"] label{
   background: #000;
 }
