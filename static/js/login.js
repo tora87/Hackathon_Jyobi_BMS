@@ -8,6 +8,7 @@ ctx = canvas.getContext( '2d' );
 const file_image = document.getElementById( 'file-image' );
 const student_number = document.getElementById('studentNumber');
 const student_name = document.getElementById('studentName');
+const error_text = document.getElementById('errorText');
 
 file_image.addEventListener( 'change', selectReadFile, false );
 
@@ -75,7 +76,12 @@ function resizeWidthHeight( target_length_px, w0, h0 ){
 }
 
 function checkQRCode(){
+    console.log("checkQRcode")
     try{
+        student_number.value = '';
+        student_name.value = '';
+        error_text.innerText = '';
+
         const imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height );
         const code = jsQR( imageData.data, canvas.width, canvas.height );
 
@@ -89,29 +95,23 @@ function checkQRCode(){
             const splitStr = str.split("+");
     
             if (regexNum.test(splitStr[0])) {
-                console.log("Student number's mold successed")
                 if(splitStr[1].length <= 40){
-                    console.log("name's mold successed")
                     student_number.value = splitStr[0];
                     student_name.value = splitStr[1];
                 } else {
-                    console.log("over length name" + splitStr[1]);
-                    student_number.value = '';
-                    student_name.value = '';
+                    error_text.innerText = `氏名が不正な値です。`;
                 }
             }else{
-                console.log("student number over flow" + splitStr[0]);
-                student_number.value = '';
-                student_name.value = '';
+                error_text.innerText = `学籍番号が不正な値です。`;
             }
         }else{
-            alert( "QRコードの読み込みに失敗しました。\n 再度選択してください。" );
+            error_text.innerText = "QRコードの読み込みに失敗しました。\n 再度選択してください。";
         }
     } catch(error){
         errorcount++;
         if(errorcount <= 3){
-        alert(`${error}\nシステムエラーです、管理者にお問い合わせください。`);
+        error_text.innerText = `${error}\nシステムエラーです、管理者にお問い合わせください。`;
         }
-        alert(`処理に失敗しました。\n もう一度お願いいたします。`);
+        error_text.innerText = `処理に失敗しました。\n もう一度お願いいたします。`;
     }
 }
