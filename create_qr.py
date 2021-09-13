@@ -43,10 +43,19 @@ def make_qr():
 def send_qr():
     if "user_id" not in session: #? セッションの有無
         return redirect("/")
+
     # クライアント側から送られてきたデータから、選択されたユーザの学籍番号(student_id)を取得する
-    user = request.form.get('user_id')
-    user_id = 4204101  # テスト用
+    user_id = request.form.get('user_id')
+    user_id = is_integer(s=user_id)
+
+    if not user_id:
+        return redirect(url_for('create_qr.make_qr'))
+
+    # user_id = 4204101  # テスト用
     user_data = create_qr_db.select_for_generation_user_data(student_id=int(user_id))
+    if user_data is None:
+        # 該当する学籍番号が存在しなかった場合
+        return redirect(url_for('create_qr.make_qr'))
 
     qr = makeQR()
     qr.generate_qr_code(student_id=int(user_data[0]), student_name=str(user_data[1]))
@@ -159,6 +168,28 @@ class Email:
         server.quit()
 
         return None
+
+
+def is_integer(s: 'str'):
+    """
+    引数で受け取った値が１０進数の整数値に変換可能か判定する。変換可能ならば、変換して値を返す。
+
+    Parameters
+    ---------
+    s : string
+        判定する文字列
+
+    Return
+    ---------
+    data : False or integer
+        変換不可能ならFalse, 変換可能なら返還後の整数値
+    """
+    try:
+        int(s, 10)
+    except ValueError as e:
+        return False
+    else:
+        return int(s, 10)
 
 
 if __name__ == '__main__':

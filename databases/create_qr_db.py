@@ -63,5 +63,7 @@ def select_for_generation_user_data(student_id: 'int') -> 'data':
 
 
 if __name__ == '__main__':
-    user = select_all_user()
+    user = select_for_generation_user_data(student_id=4204101)
     print(user)
+    if user is None:
+        print(user)
