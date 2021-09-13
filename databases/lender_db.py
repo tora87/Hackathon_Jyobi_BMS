@@ -1,6 +1,5 @@
 import datetime
-
-import MySQLdb
+from databases.db_connecter import connect_db
 
 
 def select_all_books() -> 'data or None':
@@ -14,7 +13,7 @@ def select_all_books() -> 'data or None':
     data[any]: tuple (jancord, title, author, amount, count)
         janコード、タイトル、著者、数量、現在の貸出数
     """
-    conn = get_connection()
+    conn = connect_db()
     cur = conn.cursor()
 
     sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord'
@@ -50,7 +49,7 @@ def select_specify_books(book_id: 'int') -> 'data or None':
     data[any]: tuple (jancord, title, author, amount, count)
         janコード、タイトル、著者、数量、現在の貸出数
     """
-    conn = get_connection()
+    conn = connect_db()
     cur = conn.cursor()
 
     sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord where jancord = %s'
@@ -86,7 +85,7 @@ def insert_specify_book (book_number: 'int', user_number: 'int',) -> 'bool':
     flg : bool
         デフォルト:True エラーが発生した場合はFalseが入る
     """
-    conn = get_connection()
+    conn = connect_db()
     cur = conn.cursor()
 
     date_today = datetime.date.today()
@@ -127,7 +126,7 @@ def update_return_book(book_number: 'int', user_number: 'int') -> 'bool':
     flg : bool
         Dbアクセス時、エラーが発生すればFalse
     """
-    conn = get_connection()
+    conn = connect_db()
     cur = conn.cursor()
 
     sql = 'update rental set status_flg = false where user_number = %s and books_jancord = %s and status_flg = true'
@@ -156,10 +155,6 @@ def update_return_book(book_number: 'int', user_number: 'int') -> 'bool':
 # select books_jancord, count(*) from rental where status_flg = True group by books_jancord;
 # booksテーブルと、借りられている本の冊数を結合して表示する
 # select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord where jancord =  4500000000001;
-
-
-def get_connection():
-    return MySQLdb.connect(user='hackathon-2', passwd='hackathon', host='localhost', db='jyobi_bms', charset='utf8')
 
 
 if __name__ == '__main__':
