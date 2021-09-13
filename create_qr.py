@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\Hack
 
 @qr.route('/', methods=['GET'])
 def make_qr():
-    if "user_id" not in session: #? セッションの有無
+    if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     user_data = create_qr_db.select_all_user()
     user_list = []
@@ -41,7 +41,7 @@ def make_qr():
 
 @qr.route('/', methods=['POST'])
 def send_qr():
-    if "user_id" not in session: #? セッションの有無
+    if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
 
     # クライアント側から送られてきたデータから、選択されたユーザの学籍番号(student_id)を取得する

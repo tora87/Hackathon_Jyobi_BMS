@@ -9,7 +9,7 @@ lend = Blueprint('lender', __name__, url_prefix='/lend-return')
 # url http://127.0.0.1:5000/lend-borrow/
 @lend.route('/')
 def get_lender():
-    if "user_id" not in session: #? セッションの有無
+    if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     # 最初にページを読み込むときに、すでに本の一覧を表示する
     # 本のjanコードを読み込んだ際に情報を表示するように変更するなら、下記のコードは必要ない
@@ -26,7 +26,7 @@ def get_lender():
 # みたいな書き方で、下記の処理にアクセスできる
 @lend.route('/search', methods=['POST'])
 def get_book():
-    if "user_id" not in session: #? セッションの有無
+    if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     jan = request.form['jan']
     jan = is_integer(jan)
@@ -55,7 +55,7 @@ def get_book():
 # request.form.get('radio_id') で取得して、if で分岐させる
 @lend.route('/lend', methods=['POST'])
 def lend_process():
-    if "user_id" not in session: #? セッションの有無
+    if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     # 貸出処理
     # 受け取ったデータから、本のisbnコードを受け取る
@@ -90,7 +90,7 @@ def lend_process():
 
 @lend.route('/return', methods=['POST'])
 def return_process():
-    if "user_id" not in session: #? セッションの有無
+    if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     # 返却処理
     # 受け取ったデータから、本のisbnコードを受け取る
