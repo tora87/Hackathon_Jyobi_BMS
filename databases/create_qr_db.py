@@ -1,5 +1,6 @@
 from databases.db_connecter import connect_db
 
+
 def select_all_user() -> 'data':
     """
     管理者以外の登録されているユーザ情報を取得する
@@ -15,7 +16,7 @@ def select_all_user() -> 'data':
     cur = conn.cursor()
 
     # 管理者を表示しない
-    sql = 'select * from user where number > 0000001'
+    sql = 'select * from user where number > 0999999'
 
     try:
         cur.execute(sql, )
@@ -48,7 +49,7 @@ def select_for_generation_user_data(student_id: 'int') -> 'data':
     sql = 'select * from user where number = %s'
 
     try:
-        cur.execute(sql, (student_id, ))
+        cur.execute(sql, (student_id,))
     except Exception as e:
         print('SQL実行に失敗しました:', e)
         return None

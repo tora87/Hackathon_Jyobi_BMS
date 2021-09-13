@@ -33,6 +33,7 @@ def select_specify_user(user_id: 'int'):
 
     return user
 
+
 if __name__ == '__main__':
     user_name = select_specify_user(user_id=0000000)
     if user_name is None:

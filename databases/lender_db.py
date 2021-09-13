@@ -16,7 +16,9 @@ def select_all_books() -> 'data or None':
     conn = connect_db()
     cur = conn.cursor()
 
-    sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord'
+    sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as ' \
+          'cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = ' \
+          'rental_books.books_jancord '
 
     try:
         cur.execute(sql,)
@@ -52,7 +54,9 @@ def select_specify_books(book_id: 'int') -> 'data or None':
     conn = connect_db()
     cur = conn.cursor()
 
-    sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord where jancord = %s'
+    sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as ' \
+          'cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = ' \
+          'rental_books.books_jancord where jancord = %s '
 
     try:
         cur.execute(sql, (book_id,))
@@ -69,7 +73,7 @@ def select_specify_books(book_id: 'int') -> 'data or None':
     return book
 
 
-def insert_specify_book (book_number: 'int', user_number: 'int',) -> 'bool':
+def insert_specify_book(book_number: 'int', user_number: 'int',) -> 'bool':
     """
     借りる本のjanコードと、借りる生徒の学籍番号を渡すと、rentalテーブルにレコードを追加する
 
@@ -134,7 +138,7 @@ def update_return_book(book_number: 'int', user_number: 'int') -> 'bool':
     flg = True
 
     try:
-        cur.execute(sql,(user_number, book_number,))
+        cur.execute(sql, (user_number, book_number,))
     except Exception as e:
         print('SQL実行に失敗しました:', e)
         flg = False
@@ -149,12 +153,11 @@ def update_return_book(book_number: 'int', user_number: 'int') -> 'bool':
     return flg
 
 
-# 本の数を数える
-# select jancord, count(*) from books group by jancord;
-# どの本が何冊借りられているか数える
-# select books_jancord, count(*) from rental where status_flg = True group by books_jancord;
-# booksテーブルと、借りられている本の冊数を結合して表示する
-# select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord where jancord =  4500000000001;
+# 本の数を数える select jancord, count(*) from books group by jancord; どの本が何冊借りられているか数える select books_jancord, count(*) from
+# rental where status_flg = True group by books_jancord; booksテーブルと、借りられている本の冊数を結合して表示する select jancord, title,
+# author, amount, cnt from books left outer join (select books_jancord, count(*) as cnt from rental where status_flg
+# = True group by books_jancord) as rental_books on jancord = rental_books.books_jancord where jancord =
+# 4500000000001;
 
 
 if __name__ == '__main__':
