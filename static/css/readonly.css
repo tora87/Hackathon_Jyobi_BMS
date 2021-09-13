@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+#sendForm #name {
+    cursor: default;
+    background-color: rgba(239, 239, 239, 0.3);
+    color: rgb(84, 84, 84);
+    border: solid .1em rgba(118, 118, 118, 0.3);
+}
+
+#sendForm #name:focus {
+    outline: none;
+    pointer-events: none;
+}
