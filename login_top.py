@@ -37,6 +37,8 @@ def login_process():
 
 @log_top.route('/top_page')
 def top_page():
+    if "user_id" not in session: #? セッションの有無
+        return redirect("/")
     # トップページを表示するのに必要な処理
     return render_template('home.html')
 

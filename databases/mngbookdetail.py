@@ -1,14 +1,4 @@
-import MySQLdb
-
-def connect_db():
-    conn = MySQLdb.connect(
-        host = '127.0.0.1',
-        user = 'root',
-        passwd = 'パスワード',
-        db = 'jyobi_bms',
-        charset = 'utf8'
-    )
-    return conn
+from databases.db_connecter import connect_db
 
 def update_detail(jancord,title,author,total):
     try:

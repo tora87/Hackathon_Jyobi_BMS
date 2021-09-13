@@ -3,13 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.1, maximum-scale=4,user-scalable=yes">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/readonly.css') }}">
 
 </head>
 <body>
   <div id="interactive"></div>
 
   <form action="/lender" method="POST" id="sendForm">
-    <input type="text" name="name" id="name" value="none..." disabled="false">
+    <input type="text" name="name" id="name" value="none..." readonly>
   </form>
 
   {% if books_json is defined %}
@@ -23,7 +24,10 @@
 
   {% endif %}
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
   <script type="text/javascript" src="../static/js/quagga.min.js" type="module"></script>
   <script src="../static/js/lender.js" type="module"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/lender_ajax.js') }}"></script>
 </body>
 </html>

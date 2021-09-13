@@ -13,18 +13,7 @@ def get_lender():
         return redirect("/")
     # 最初にページを読み込むときに、すでに本の一覧を表示する
     # 本のjanコードを読み込んだ際に情報を表示するように変更するなら、下記のコードは必要ない
-    book = lender_db.select_all_books()
-    book_data = []
-    for array in book:
-        book_data.append({
-            'book_id': array[0],
-            'name': array[1],
-            'author': array[2],
-            'amount': array[3],
-            'stock': array[3] - array[4] if array[4] is not None else array[3],
-        })
-    print(book_data)
-    return render_template('lender.html', books_json=book_data)
+    return render_template('lender.html')
 
 
 # ajaxで本を読み込んだ際、
@@ -50,15 +39,14 @@ def get_book():
         return redirect(url_for('lender.get_lender'))
 
     book_data = []
-    for array in book:
-        book_data.append({
-            'book_id': array[0],
-            'name': array[1],
-            'author': array[2],
-            'amount': array[3],
-            'stock': array[3] - array[4] if array[4] is not None else array[3],
-        })
-
+    stock = book[3] if book[4] is None else int(book[3]) - int(book[4])
+    book_data.append({
+        'book_id': book[0],
+        'name': book[1],
+        'author': book[2],
+        'amount': book[3],
+        'stock': stock,
+    })
     return render_template('lender.html', books_json=book_data)
 
 
@@ -78,6 +66,15 @@ def lend_process():
     jan = is_integer(jan)
     if not jan:
         # 受け取った値がFalseの場合
+        return redirect(url_for('lender.get_lender'))
+
+    recode = lender_db.select_specify_books(book_id=jan)
+    if recode is None:
+        # DBのデータと一致しない場合
+        return redirect(url_for('lender.get_lender'))
+    stock = recode[3] if recode[4] is None else int(recode[3]) - int(recode[4])
+    if stock == 0:
+        # 貸出冊数の上限
         return redirect(url_for('lender.get_lender'))
 
     # 受け取ったデータをdbに登録する

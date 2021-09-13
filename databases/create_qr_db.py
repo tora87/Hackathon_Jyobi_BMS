@@ -1,5 +1,4 @@
-import MySQLdb
-
+from databases.db_connecter import connect_db
 
 def select_all_user() -> 'data':
     """
@@ -12,7 +11,7 @@ def select_all_user() -> 'data':
     data[any]: tuple (number, name, mail)
         学籍番号、 名前、 メールアドレス
     """
-    conn = get_connection()
+    conn = connect_db()
     cur = conn.cursor()
 
     # 管理者を表示しない
@@ -42,7 +41,7 @@ def select_for_generation_user_data(student_id: 'int') -> 'data':
     data: tuple (number, name, mail)
         学籍番号, 名前、 メールアドレス
     """
-    conn = get_connection()
+    conn = connect_db()
     cur = conn.cursor()
 
     # 管理者を表示しない
@@ -61,10 +60,6 @@ def select_for_generation_user_data(student_id: 'int') -> 'data':
     conn.close()
 
     return user_data
-
-
-def get_connection():
-    return MySQLdb.connect(user='hackathon-2', passwd='hackathon', host='localhost', db='jyobi_bms', charset='utf8')
 
 
 if __name__ == '__main__':

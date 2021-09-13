@@ -39,3 +39,4 @@ Quagga.onDetected(success => {
 
     // sendForm.submit();
 })
+
