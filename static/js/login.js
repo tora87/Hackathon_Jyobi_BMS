@@ -1,5 +1,6 @@
 let canvas = null;
 let ctx = null;
+let errorcount = 0;
 
 canvas = document.getElementById( 'mycanvas' );
 ctx = canvas.getContext( '2d' );
@@ -74,19 +75,43 @@ function resizeWidthHeight( target_length_px, w0, h0 ){
 }
 
 function checkQRCode(){
-    const imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height );
-    const code = jsQR( imageData.data, canvas.width, canvas.height );
-    if( code ){
-        const bytes = code.binaryData;
-        const text_decoder = new TextDecoder('utf-8');
-        const str = text_decoder.decode(Uint8Array.from(bytes).buffer);
-        alert( str );
+    try{
+        const imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height );
+        const code = jsQR( imageData.data, canvas.width, canvas.height );
 
-        const splitStr = str.split("+");
-
-        student_number.value = splitStr[0];
-        student_name.value = splitStr[1];
-    }else{
-        alert( "No QR Code found." );
+        if( code ){
+            const regexNum = new RegExp('^[A-Za-z0-9]{1,10}$','g');
+    
+            const bytes = code.binaryData;
+            const text_decoder = new TextDecoder('utf-8');
+            const str = text_decoder.decode(Uint8Array.from(bytes).buffer);
+    
+            const splitStr = str.split("+");
+    
+            if (regexNum.test(splitStr[0])) {
+                console.log("Student number's mold successed")
+                if(splitStr[1].length <= 40){
+                    console.log("name's mold successed")
+                    student_number.value = splitStr[0];
+                    student_name.value = splitStr[1];
+                } else {
+                    console.log("over length name" + splitStr[1]);
+                    student_number.value = '';
+                    student_name.value = '';
+                }
+            }else{
+                console.log("student number over flow" + splitStr[0]);
+                student_number.value = '';
+                student_name.value = '';
+            }
+        }else{
+            alert( "QRコードの読み込みに失敗しました。\n 再度選択してください。" );
+        }
+    } catch(error){
+        errorcount++;
+        if(errorcount <= 3){
+        alert(`${error}\nシステムエラーです、管理者にお問い合わせください。`);
+        }
+        alert(`処理に失敗しました。\n もう一度お願いいたします。`);
     }
 }
