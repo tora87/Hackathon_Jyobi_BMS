@@ -65,8 +65,8 @@
                         readonly
                     />
                 </div>
-                <div> <!--? 管理者機能_編集 -->
-                    {% if session.get('auth_flag', true) == true  %} <!--? session.getの第二引数は初期値、nullの場合はfalseとして扱う -->
+                <div>
+                    {% if session.get('user_id')[0] == '0'  %} <!--? 学籍番号が０から始まるアカウントを管理者(教員)とする -->
                         <a href="{{url_for('booklist_view.edit_view',jancord=sel_book_detail[0])}}" class="btn edit">編集</a>
                     {% endif %}
                 </div>
