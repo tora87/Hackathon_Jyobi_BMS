@@ -1,4 +1,4 @@
-import MySQLdb
+from databases.db_connecter import connect_db
 
 
 def select_specify_user(user_id: 'int'):
@@ -16,7 +16,7 @@ def select_specify_user(user_id: 'int'):
         学籍番号と紐づいた名前
     """
 
-    conn = get_connection()
+    conn = connect_db()
     cur = conn.cursor()
 
     sql = 'select name from user where number = %s'
@@ -32,11 +32,6 @@ def select_specify_user(user_id: 'int'):
     conn.close()
 
     return user
-
-
-def get_connection():
-    return MySQLdb.connect(user='hackathon-2', passwd='hackathon', host='localhost', db='jyobi_bms', charset='utf8')
-
 
 if __name__ == '__main__':
     user_name = select_specify_user(user_id=0000000)
