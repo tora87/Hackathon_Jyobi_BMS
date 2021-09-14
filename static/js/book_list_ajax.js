@@ -12,5 +12,17 @@ $(function () {
             console.log(err);
         })
     })
+    $(".btn-outline-primary").on("click", function () {
+        let kw = $("#search_text_form").val();
+        $.ajax({
+            type: 'POST',
+            url: '/booklist/search',
+            data: {'key': kw},
+        }).done(function (res) {
+            $('body').html(res);
+        }).error(function (err) {
+            console.log(err);
+        })
+    })
 
 })
