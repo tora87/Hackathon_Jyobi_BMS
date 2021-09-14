@@ -209,7 +209,8 @@ i.fas.fa-sign-out-alt{
 }
 
 .books li {
-  text-align:center;
+  text-align:left;
+  margin-bottom: 15px;
 }
 
 .book-detail {
