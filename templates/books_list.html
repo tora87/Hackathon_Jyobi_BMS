@@ -1,6 +1,8 @@
 {% extends 'template.html' %}
 
 {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_search .css') }}">
+    <link rel="stylesheet" href="../static/css/booklist_search.css">
 {% endblock %}
 
 
@@ -10,6 +12,12 @@
 
 
 {% block content %}
+    <div class="container-fluid">
+        <form class="d-flex">
+            <input id="search_text_form" class="form-control me-6" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary" type="button">検索</button>
+        </form>
+    </div>
     <div class="container books_list">
         <div class="flex-wrapper">
             <ul class="books flex-item">
@@ -81,7 +89,7 @@
         </div>
     </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='/js/book_list_ajax.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='/js/book_list_ajax.js') }}"></script>
 {% endblock %}
 
 {% block javascript %}
