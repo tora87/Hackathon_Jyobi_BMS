@@ -8,8 +8,7 @@
   <h2 class="page-title">追加画面</h2>
   <div class="container add_books">
     <div class="flex-wrapper">
-      <div class="canvas_test">
-        qrコード読み取り部分
+      <div id="interactive">
       </div>
       <form action="{{url_for('add_books.add_books')}}" method='POST' class="form-add">
         {% if error!=0 or success!=0 %}
@@ -25,9 +24,10 @@
 	    	  {% endif %}
           </div>
         {% endif %}
+        <p id="add-error-text"></p>
         <div class="form-item">
           <label for="book-name">JANコード</label>
-          <input type="number" name="jancord" id="jancord" readonly>
+          <input type="number" name="jancord" id="jancord">
         </div>
         <div class="form-item">
           <label for="book-name">図書名</label>
@@ -39,10 +39,12 @@
         </div>
         <div class="form-item">
           <label for="book-amount">冊数</label>
-          <input type="number" name="book-amount" id="book-amout">
+          <input type="number" name="book-amount" id="book-amount">
         </div>
       <button type="submit" class="btn">登録</button>
       </form>
     </div>
   </div>
+  <script src="../static/js/add_books.js" type="module"></script>
+  <script type="text/javascript" src="../static/js/quagga.min.js" type="module"></script>
 {% endblock %}
