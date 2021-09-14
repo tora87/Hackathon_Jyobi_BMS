@@ -13,6 +13,9 @@
   <header class="header">
     <div class="header-wrapper">
       <div class="header-wrapper-left">
+      {% if session.get('user_id') == none %}
+        <h1 class="logo"><a>Jyobi-BMS</a></h1>
+      {% else %}
         <h1 class="logo"><a href="{{url_for('login_top.top_page')}}">Jyobi-BMS</a></h1>
         <nav class="header-nav">
           <ul>
@@ -24,8 +27,11 @@
             <li class="header-nav-item"><a href="{{url_for('lender.get_lender')}}">借りる</a></li>
           </ul>
         </nav>
+      {% endif %}
       </div>
       <div class="header-wrapper-right">
+          {% if session.get('user_id') == none %}
+          {% else %}
         <div class="user-info">
           <div class="user-number">学籍番号：{{ session['user_id'] }}</div>
           <div class="user-name">生徒名&emsp;：{{ session['user_name'] }}</div>
@@ -34,11 +40,15 @@
           <a href="{{url_for('login_top.logout')}}"><i class="fas fa-sign-out-alt"></i></a>
           <div class="logout-text">ログアウト</div>
         </div>
+          {% endif %}
       </div>
     </div>
   </header>
   <div class="header-bottom">
-    <div class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
+      {% if session.get('user_id') == none %}
+      {% else %}
+          <div id="back_button" class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
+      {% endif %}
   </div>
   {% block content %}
 
