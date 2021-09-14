@@ -42,7 +42,8 @@ def select_searchbooks(keyword):
     try:
         conn = connect_db()
         cur = conn.cursor()
-        sql = "SELECT jancord, title from books WHERE title LIKE '%s'"
+        sql = "SELECT jancord, title from books WHERE title LIKE %s"
+        # sql = "SELECT jancord, title from books WHERE title LIKE '%教育%'"
         cur.execute(sql,('%'+keyword+'%',))
         sel_search_books = list(cur.fetchall())
         cur.close()

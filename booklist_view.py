@@ -41,7 +41,9 @@ def search_book_list():
         return redirect("/")
     keyword = request.form.get("key")
     sel_search_books = select_searchbooks(keyword)
-    return render_template("books_list.html", search_book_table=sel_search_books)
+    print(sel_search_books)
+    session['book_list'] = sel_search_books
+    return render_template("books_list.html", flg=True)
 
 #! 詳細編集ページ表示==================
 @bol_view.route('/booklist/<int:jancord>/edit')
