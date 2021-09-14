@@ -1,5 +1,9 @@
 {% extends 'template.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/disable_back_button.css') }}">
+{% endblock %}
+
 {% block content %}
   <h2 class="page-title">ホーム画面</h2>
   <div class="container home">

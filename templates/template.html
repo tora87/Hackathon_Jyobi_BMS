@@ -13,9 +13,10 @@
   <header class="header">
     <div class="header-wrapper">
       <div class="header-wrapper-left">
-        <h1 class="logo"><a href="{{url_for('login_top.top_page')}}">Jyobi-BMS</a></h1>
       {% if session.get('user_id') == none %}
+        <h1 class="logo"><a>Jyobi-BMS</a></h1>
       {% else %}
+        <h1 class="logo"><a href="{{url_for('login_top.top_page')}}">Jyobi-BMS</a></h1>
         <nav class="header-nav">
           <ul>
             <li class="header-nav-item"><a href="{{url_for('booklist_view.booklist_view')}}">一覧</a></li>
@@ -46,7 +47,7 @@
   <div class="header-bottom">
       {% if session.get('user_id') == none %}
       {% else %}
-        <div class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
+          <div id="back_button" class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
       {% endif %}
   </div>
   {% block content %}
