@@ -1,7 +1,36 @@
 {% extends 'template.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="../static/css/qr.css">
+{% endblock %}
+
 {% block content %}
-  
+<h2 class="page-title">QRコード作成</h2>
+  <div class="container qr">
+    <p class="form-info-text">QRコードを生成したい生徒を選択してください。</p>
+    <form action="" class="form-create-qr">
+      <table class="form-table">
+        <tr>
+          <th></th>
+          <th>学籍番号</th>
+          <th>生徒名</th>
+          <th>メールアドレス</th>
+        </tr>
+        <!-- 動的に増える部分 -->
+        {% if user_data is defined %}
+          {% for user in user_data %}
+          <tr>
+            <td><input type="checkbox" name="user_id" id="{{user.user_id}}"></td>
+            <td><label for="{{user.user_id}}">{{user.user_id}}</label></td>
+            <td><label for="{{user.user_id}}">{{user.name}}</label></td>
+            <td><label for="{{user.user_id}}">{{user.email}}</label></td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+      <button type=submit class="btn">QR作成</button>
+    </form>
+  </div>
 
   <scrit src="../static/js/create_qr.js" type="text/javascript"></scrit>
 {% endblock %}
