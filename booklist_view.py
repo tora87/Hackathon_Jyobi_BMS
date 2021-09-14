@@ -1,4 +1,4 @@
-from databases.getbooklist import select_allbooks, select_bookdetail
+from databases.getbooklist import select_allbooks, select_bookdetail, select_searchbooks
 from databases.mngbookdetail import update_detail as upd_d, delete_detail as dlt_d
 from flask import Flask, Blueprint, render_template, redirect, session, request, url_for
 import MySQLdb, databases.getbooklist
@@ -33,6 +33,15 @@ def get_ajax_book_list():
     jancord = request.form.get("jan")
     sel_book_detail = select_bookdetail(jancord=jancord)
     return render_template('books_list.html', sel_book_detail=sel_book_detail)
+
+# ajaxを用いて、遷移を伴わずに図書検索を行う
+@bol_view.route('/booklist/search', methods=['POST'])
+def search_book_list():
+    if "user_id" not in session:  # ? セッションの有無
+        return redirect("/")
+    keyword = request.form.get("key")
+    sel_search_books = select_searchbooks(keyword)
+    return render_template("books_list.html", search_book_table=sel_search_books)
 
 #! 詳細編集ページ表示==================
 @bol_view.route('/booklist/<int:jancord>/edit')
