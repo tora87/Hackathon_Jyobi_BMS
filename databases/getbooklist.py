@@ -37,3 +37,17 @@ def select_bookdetail(jancord):
     except Exception as e:
         print(e)
     return
+
+def select_searchbooks(keyword):
+    try:
+        conn = connect_db()
+        cur = conn.cursor()
+        sql = "SELECT jancord, title from books WHERE title LIKE '%s'"
+        cur.execute(sql,('%'+keyword+'%',))
+        sel_search_books = list(cur.fetchall())
+        cur.close()
+        conn.close()
+        return sel_search_books
+    except Exception as e:
+        print(e)
+    return

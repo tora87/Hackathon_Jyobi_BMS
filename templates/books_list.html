@@ -21,6 +21,17 @@
     <div class="container books_list">
         <div class="flex-wrapper">
             <ul class="books flex-item">
+                {% if sea
+                    rch_book_table|length!=0 %}
+                {% for book in search_book_table %}
+                <li>
+                    <a class="aTag">
+                        {{ book[1] }}
+                        <input type="text" name="book_id" value="{{ book[0] }}" hidden>
+                    </a>
+                </li>
+                {% endfor %}
+                {% else %}
                 {% if session['book_list']|length!=0 %}
                 <!-- 動的に増える部分 -->
                 {% for book in session['book_list'] %}
@@ -37,6 +48,7 @@
                 </li>
                 {% endfor %} {% else %}
                 <p>該当なし</p>
+                {% endif %}
                 {% endif %}
             </ul>
             <div class="book-detail flex-item">
