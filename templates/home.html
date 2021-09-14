@@ -5,8 +5,10 @@
   <div class="container home">
     <div class="home-items">
       <a href="{{url_for('booklist_view.booklist_view')}}" class="home-item">一覧</a>
-      <a href="{{url_for('add_books.add_books')}}" class="home-item">追加</a>
-      <a href="{{url_for('create_qr.make_qr')}}" class="home-item">QR作成</a>
+        {% if session.get('user_id')[0] == '0'  %}
+        <a href="{{url_for('add_books.add_books')}}" class="home-item">追加</a>
+        <a href="{{url_for('create_qr.make_qr')}}" class="home-item">QR作成</a>
+        {% endif %}
       <a href="{{url_for('lender.get_lender')}}" class="home-item">貸借</a>
     </div>
   </div>
