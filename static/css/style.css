@@ -271,8 +271,12 @@ li a {
 }
 
 /* add_books.html */
-.form-add {
+#interactive {
   flex: 1;
+}
+
+.form-add {
+  flex:1;
   text-align: center;
 }
 
