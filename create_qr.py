@@ -29,6 +29,7 @@ def make_qr():
     if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     user_data = create_qr_db.select_all_user()
+    number_scope = create_qr_db.select_number_scope()
     user_list = []
     for array in user_data:
         user_list.append({
@@ -36,8 +37,29 @@ def make_qr():
             'name': array[1],
             'email': array[2],
         })
-    return render_template('qr.html', user_data=user_list)
+    return render_template('qr.html', user_data=user_list, number_scope=number_scope)
 
+@qr.route('/search', methods=['POST'])
+def make_qr_searchuser():
+    if "user_id" not in session:  # ? セッションの有無
+        return redirect("/")
+    selectnum = request.form.get("selectnum")
+    keywords = request.form.get("keywords")
+    if selectnum != '':
+        user_data = create_qr_db.select_search_user(selectnum)
+    if keywords is not None:
+        user_data = create_qr_db.select_keyword_user(keywords)
+    if keywords is not None and selectnum != '':
+        user_data = create_qr_db.select_key_num_user(selectnum,keywords)
+    number_scope = create_qr_db.select_number_scope()
+    user_list = []
+    for array in user_data:
+        user_list.append({
+            'user_id': array[0],
+            'name': array[1],
+            'email': array[2],
+        })
+    return render_template('qr.html', user_data=user_list, number_scope=number_scope)
 
 @qr.route('/', methods=['POST'])
 def send_qr():

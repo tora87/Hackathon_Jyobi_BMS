@@ -5,6 +5,18 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid">
+  <form class="d-flex">
+      <select id="select_number_form">
+        <option disabled selected hidden>学籍番号</option>
+        {% for number in number_scope %}
+        <option class="num_options" value="{{number[0]}}">{{number[0]}} ~</option>
+        {% endfor %}
+      </select>
+      <input id="search_text_form" class="form-control me-6" type="search" placeholder="Search" aria-label="Search">
+      <button id="search_Btn" class="btn btn-outline-primary" type="button">検索</button>
+  </form>
+</div>
 <h2 class="page-title">QRコード作成</h2>
   <div class="container qr">
     <p class="form-info-text">QRコードを生成したい生徒を選択してください。</p>
@@ -31,6 +43,6 @@
       <button type=submit class="btn">QR作成</button>
     </form>
   </div>
-
-  <scrit src="../static/js/create_qr.js" type="text/javascript"></scrit>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/create_qr.js')}}"></script>
 {% endblock %}
