@@ -298,6 +298,10 @@ label {
   text-align: center;
 }
 
+.add-error-text {
+  color: #f00;
+}
+
 /* login.html */
 .container.login {
   width: 600px;
