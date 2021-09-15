@@ -36,7 +36,6 @@ def select_all_user() -> 'data':
 def select_search_user(selectnum):
     conn = connect_db()
     cur = conn.cursor()
-
     sql = "SELECT * FROM user WHERE number BETWEEN %s AND %s"
     try:
         cur.execute(sql, (int(selectnum), int(selectnum)+99999))
@@ -46,9 +45,35 @@ def select_search_user(selectnum):
     user = cur.fetchall()
     cur.close()
     conn.close()
-
     return user
 
+def select_keyword_user(keywords):
+    conn = connect_db()
+    cur = conn.cursor()
+    sql = "SELECT * FROM user WHERE number > 0999999 AND name LIKE %s"
+    try:
+        cur.execute(sql,('%'+keywords+'%',))
+    except Exception as e:
+        print('SQL実行に失敗しました:', e)
+        return None
+    user = cur.fetchall()
+    cur.close()
+    conn.close()
+    return user
+
+def select_key_num_user(selectnum,keywords):
+    conn =connect_db()
+    cur = conn.cursor()
+    sql = "SELECT * FROM user WHERE name LIKE %s AND number BETWEEN %s AND %s"
+    try:
+        cur.execute(sql,('%'+keywords+'%', int(selectnum), int(selectnum)+99999,))
+    except Exception as e:
+        print('SQL実行に失敗しました:', e)
+        return None
+    user = cur.fetchall()
+    cur.close()
+    conn.close()
+    return user
 
 def select_number_scope():
     conn = connect_db()
@@ -63,6 +88,8 @@ def select_number_scope():
     cur.close()
     conn.close()
     return number
+
+
 
 
 def select_for_generation_user_data(student_id: 'int') -> 'data':

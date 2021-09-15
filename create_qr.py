@@ -44,7 +44,13 @@ def make_qr_searchuser():
     if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     selectnum = request.form.get("selectnum")
-    user_data = create_qr_db.select_search_user(selectnum)
+    keywords = request.form.get("keywords")
+    if selectnum != '':
+        user_data = create_qr_db.select_search_user(selectnum)
+    if keywords is not None:
+        user_data = create_qr_db.select_keyword_user(keywords)
+    if keywords is not None and selectnum != '':
+        user_data = create_qr_db.select_key_num_user(selectnum,keywords)
     number_scope = create_qr_db.select_number_scope()
     user_list = []
     for array in user_data:

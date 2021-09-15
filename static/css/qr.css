@@ -11,6 +11,11 @@
   right: 0;
 }
 
+#select_number_form {
+  padding: 10.5px 9px 8.4px;
+  color: #555;
+}
+
 .container-fluid .d-flex .form-control {
   width: 500px!important;
   outline: none!important;
