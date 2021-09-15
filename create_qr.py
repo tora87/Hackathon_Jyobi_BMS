@@ -45,29 +45,33 @@ def send_qr():
         return redirect("/")
 
     # クライアント側から送られてきたデータから、選択されたユーザの学籍番号(student_id)を取得する
-    user_id = request.form.get('user_id')
-    user_id = is_integer(s=user_id)
+    # user_id = request.form.get('user_id')
+    # user_id = is_integer(s=user_id)
 
-    if not user_id:
-        return redirect(url_for('create_qr.make_qr'))
+    user_id_list = request.form.getlist('user_id')
 
-    # user_id = 4204101  # テスト用
-    user_data = create_qr_db.select_for_generation_user_data(student_id=int(user_id))
-    if user_data is None:
-        # 該当する学籍番号が存在しなかった場合
-        return redirect(url_for('create_qr.make_qr'))
+    for user_id in user_id_list:
+        user_id = is_integer(s=user_id)
+        if not user_id:
+            return redirect(url_for('create_qr.make_qr'))
 
-    qr = makeQR()
-    qr.generate_qr_code(student_id=int(user_data[0]), student_name=str(user_data[1]))
+        user_data = create_qr_db.select_for_generation_user_data(student_id=int(user_id))
+        if user_data is None:
+            # 該当する学籍番号が存在しなかった場合
+            return redirect(url_for('create_qr.make_qr'))
 
-    flg = slack_send_message.send_message_for_email(mail_message=[
-        {"email": user_data[2], "message": "新たに生成されたQRコードです。\n次回ログインからはこちらを使用してください。"}
-    ])
+        qr = makeQR()
+        qr.generate_qr_code(student_id=int(user_data[0]), student_name=str(user_data[1]))
 
-    if flg:
-        return render_template('home.html')  # ホーム画面を表示する処理を作成次第、そちらへ変更する
-    else:
-        return redirect(url_for('create_qr.make_qr'))
+        flg = slack_send_message.send_message_for_email(mail_message=[
+            {"email": user_data[2], "message": "新たに生成されたQRコードです。\n次回ログインからはこちらを使用してください。"}
+        ])
+
+        if not flg:
+            # エラー発生時、選択画面へ戻る
+            return redirect(url_for('create_qr.make_qr'))
+
+    return render_template('home.html')  # ホーム画面を表示する処理を作成次第、そちらへ変更する
 
 
 class makeQR:
