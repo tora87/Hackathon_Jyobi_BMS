@@ -21,6 +21,7 @@ def detail_view(jancord):
     if "user_id" not in session: #? セッションの有無
         return redirect("/")
     books_all_table = select_allbooks() #? 図書テーブルから全図書の取得[JANcode,book_name]
+    session['book_list'] = books_all_table
     sel_book_detail = select_bookdetail(jancord) #? 図書のデータの取得[JANcode,book_name,book_author,AllAmo,remainingAmo]
     return render_template('books_list.html', books_all_table=books_all_table, sel_book_detail=sel_book_detail)
 
