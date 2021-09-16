@@ -2,7 +2,11 @@
 
 {% block css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_search .css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_scroll.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_result.css') }}">
     <link rel="stylesheet" href="../static/css/booklist_search.css">
+    <link rel="stylesheet" href="../static/css/booklist_scroll.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 {% endblock %}
 
 
@@ -21,6 +25,7 @@
     <h2 class="page-title">一覧画面</h2>
     <div class="container books_list">
         <div class="flex-wrapper">
+            <div class="inner-li">
             <ul class="books flex-item">
 {#                {% if search_book_table|length!=0 %}#}
 {#                {% for book in search_book_table %}#}
@@ -41,7 +46,7 @@
 {#                    >#}
 {#                        {{book[1]}}#}
 {#                    </a>#}
-                    <a class="aTag">
+                    <a class="aTag"><i class="fas fa-book"></i>
                         {{ book[1] }}
                         <input type="text" name="book_id" value="{{ book[0] }}" hidden>
                     </a>
@@ -50,10 +55,13 @@
                 <p>該当なし</p>
 {#                {% endif %}#}
                 {% endif %}
+
             </ul>
+            </div>
+
             <div class="book-detail flex-item">
                 {% if sel_book_detail|length!=0 %}
-                <div>
+                <div class="booklist_result">
                     <label for="name">作品名</label
                     ><input
                         type="text"
@@ -62,7 +70,7 @@
                         readonly
                     />
                 </div>
-                <div>
+                <div class="booklist_result">
                     <label for="author">著者名</label
                     ><input
                         type="text"
@@ -71,7 +79,7 @@
                         readonly
                     />
                 </div>
-                <div>
+                <div class="booklist_result">
                     <label for="totallable">図書在庫総数</label
                     ><input
                         type="number"
@@ -80,7 +88,7 @@
                         readonly
                     />
                 </div>
-                <div>
+                <div class="booklist_result">
                     <label for="lentalable">貸出可能数</label
                     ><input
                         type="number"

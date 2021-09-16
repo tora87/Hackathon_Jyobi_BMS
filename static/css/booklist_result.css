@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+.book-detail {
+    color: #7e97ed;
+    font-weight: bold;
+}
+
+.book-detail label {
+    padding: 5.5px 0;
+}
+
+.booklist_result {
+    border-bottom: 1.5px solid #7e97ed;
+}
+
+.book-detail input {
+    width: calc(100% - 100px);
+    border: none;
+    text-overflow: ellipsis;
+    color: #9c9c9c;
+    font-size: 17px;
+
+}
