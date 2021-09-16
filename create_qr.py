@@ -46,9 +46,14 @@ def make_qr_searchuser():
     selectnum = request.form.get("selectnum")
     keywords = request.form.get("keywords")
     if selectnum != '':
+        session['search_number'] = selectnum
         user_data = create_qr_db.select_search_user(selectnum)
+    else:
+        session.pop('search_number', None)
     if keywords is not None:
+        session['search_keyword'] = keywords
         user_data = create_qr_db.select_keyword_user(keywords)
+
     if keywords is not None and selectnum != '':
         user_data = create_qr_db.select_key_num_user(selectnum,keywords)
     number_scope = create_qr_db.select_number_scope()
