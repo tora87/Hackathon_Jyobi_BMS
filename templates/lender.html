@@ -7,26 +7,19 @@
 {% block content %}
 <h2 class="page-title">貸借画面</h2>
 
-<input type="hidden" id="errorsText" value="aaaaaaaa" change="failread()"/>
+<input type="hidden" id="errorsText" readonly/>
 {% if error != '' %}
   {% if error == 0 %}
-    <script>
-      document.getElementById('errorsText').value = 'JANコードの読み取りに失敗しました、もう一度お願いいたします。'
-      document.getElementById('errorsText').type = '';
-    </script>
-    <!-- <h2>JANコードの読み取りに失敗しました、もう一度お願いいたします。</h2> -->
+    {% if count <= 3 %}
+      <p class="error-text">JANコードの読み取りに失敗しました、もう一度お願いいたします。</p>
+    {% elif count >= 4 %}
+      <p class="error-text">お求めの本のデータが存在しない可能性があります、管理者にお問い合わせください。</p>
+    {% endif %}
   {% elif error == 1 %}
-    <script>
-      document.getElementById('errorsText').value = 'お求めの本が存在しませんでした、管理者にお問い合わせください。'
-      document.getElementById('errorsText').type = '';
-    </script>
-    <!-- <h2>お求めの本が存在しませんでした、管理者にお問い合わせください。</h2> -->
+    <p class="error-text">データが一致しませんでした、お手数ですが再度お願いいたします。</p>
   {% elif error == 2 %}
-    <h2>貸出可能冊数に達しています。現在貸し出すことができません。</h2>
+    <p class="error-text">貸出可能冊数に達しています。現在貸し出すことができません。</p>
   {% endif %}
-  <!-- <script>
-    document.getElementById('errorsText').value = '';
-  </script> -->
 {% endif %}
 
 {% if result %}

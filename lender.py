@@ -12,6 +12,7 @@ def get_lender():
     if "user_id" not in session:
         return redirect("/")
 
+    session['counter'] = 0
     return render_template('lender.html')
 
 
@@ -24,14 +25,16 @@ def get_book():
     jan = is_integer(jan)
 
     if not jan:
+        session['counter'] += 1
         error = 0
-        return render_template('lender.html', error=error)
+        return render_template('lender.html', error=error, count=session['counter'])
 
     book = lender_db.select_specify_books(book_id=jan)
 
     if book is None:
-        error = 1
-        return render_template('lender.html', error=error)
+        session['counter'] += 1
+        error = 0
+        return render_template('lender.html', error=error, count=session['counter'])
 
     book_data = []
     stock = book[3] if book[4] is None else int(book[3]) - int(book[4])
@@ -56,11 +59,13 @@ def lend_process():
     jan = is_integer(jan)
     if not jan:
         error = 0
-        return render_template('lender.html', error=error)
+        session['counter'] += 1
+        return render_template('lender.html', error=error, count=session['counter'])
 
     recode = lender_db.select_specify_books(book_id=jan)
     if recode is None:
-        return redirect(url_for('lender.get_lender'))
+        error = 1
+        return render_template('lender.html', error=error)
     stock = recode[3] if recode[4] is None else int(recode[3]) - int(recode[4])
     if stock == 0:
         error = 2
@@ -88,8 +93,9 @@ def return_process():
 
     jan = is_integer(jan)
     if not jan:
+        session['counter'] += 1
         error = 0
-        return render_template('lender.html', error=error)
+        return render_template('lender.html', error=error, count=session['counter'])
 
     flg = lender_db.update_return_book(user_number=user_id, book_number=jan)
 
