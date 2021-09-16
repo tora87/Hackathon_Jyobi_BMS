@@ -18,7 +18,7 @@ def delete_detail(jancord):
     try:
         conn = connect_db()
         cur = conn.cursor()
-        sql = "DELETE FROM books WHERE jancord=%s"
+        sql = "UPDATE books SET delete_flg=1 WHERE jancord=%s"
         cur.execute(sql,(jancord,))
         cur.close()
         conn.commit()
