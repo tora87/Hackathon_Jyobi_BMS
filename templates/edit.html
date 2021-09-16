@@ -7,7 +7,8 @@
 {% block content %}
 <h2 class="page-title">編集画面</h2>
   <div class="container edit">
-    <form method='POST' class="form-edit">
+    <form method='POST' class="form-edit" id="form-edit">
+      <p id="add-error-text"></p>
       <div class="form-item">
         <label for="name">作品名</label><input type="text" id="name" name="name" value="{{sel_book_detail[1]}}">
       </div>
@@ -19,11 +20,13 @@
       </div>
       <div class="buttons flex-wrapper">
         {% if sel_book_detail[3] == sel_book_detail[4]  %}
-        <button class="btn delete" type="submit" formaction="{{url_for('booklist_view.delete_detail',jancord=jancord)}}">削除</button>
+        <button id="delete_btn" class="btn delete" type="submit" formaction="{{url_for('booklist_view.delete_detail',jancord=jancord)}}">削除</button>
         {% endif %}
         <button class="btn cancel" type="button" onclick="location.reload()">取り消し</button>
-        <button class="btn edit" type="submit" formaction="{{url_for('booklist_view.update_detail',jancord=jancord)}}">変更する</button>
+        <button id="edit-btn" class="btn edit" type="button" formaction="{{url_for('booklist_view.update_detail',jancord=jancord)}}">変更する</button>
       </div>
     </form>
   </div>
+  <script type="text/javascript" src="{{ url_for('static', filename='/js/edit.js') }}"></script>
 {% endblock %}
+
