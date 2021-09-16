@@ -10,13 +10,13 @@
     <div class="flex-wrapper">
       <div id="interactive">
       </div>
-      <form action="{{url_for('add_books.add_books')}}" method='POST' class="form-add">
+      <form action="{{url_for('add_books.add_books')}}" method='POST' class="form-add" id="form-add">
         {% if error!=0 or success!=0 %}
           <div class="form-item">
           {% if error == 1 %}
-		  	    <p>追加に失敗しました。</p>
+		  	    <p class="add-error-text">追加に失敗しました。</p>
 	    	  {% elif error == 2 %}
-	    	    <p>そのJANコードは既に登録されています</p>
+	    	    <p class="add-error-text">そのJANコードは既に登録されています</p>
 	        {% endif %}
 	    	  
           {% if success == 1 %}
@@ -24,7 +24,7 @@
 	    	  {% endif %}
           </div>
         {% endif %}
-        <p id="add-error-text"></p>
+        <p id="add-error-text" class="add-error-text"></p>
         <div class="form-item">
           <label for="book-name">JANコード</label>
           <input type="number" name="jancord" id="jancord">
@@ -41,7 +41,7 @@
           <label for="book-amount">冊数</label>
           <input type="number" name="book-amount" id="book-amount">
         </div>
-      <button type="submit" class="btn">登録</button>
+      <button type="button" class="btn" id="register-btn">登録</button>
       </form>
     </div>
   </div>
