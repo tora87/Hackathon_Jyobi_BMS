@@ -25,8 +25,6 @@ Quagga.init({
   const sendForm = document.getElementById('sendForm');
   const jancode = document.getElementById('jan');
 
-  const errorstext = document.getElementById('errorsText');
-
 Quagga.onDetected(success => {
     const code = success.codeResult.code;
     jancode.value = code;

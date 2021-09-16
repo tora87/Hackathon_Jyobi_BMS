@@ -2,37 +2,13 @@
 
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/readonly.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lender.css') }}">
 {% endblock %}
 
 {% block content %}
 <h2 class="page-title">貸借画面</h2>
 
-<input type="hidden" id="errorsText" readonly/>
-{% if error != '' %}
-  {% if error == 0 %}
-    {% if count <= 3 %}
-      <p class="error-text">JANコードの読み取りに失敗しました、もう一度お願いいたします。</p>
-    {% elif count >= 4 %}
-      <p class="error-text">お求めの本のデータが存在しない可能性があります、管理者にお問い合わせください。</p>
-    {% endif %}
-  {% elif error == 1 %}
-    <p class="error-text">データが一致しませんでした、お手数ですが再度お願いいたします。</p>
-  {% elif error == 2 %}
-    <p class="error-text">貸出可能冊数に達しています。現在貸し出すことができません。</p>
-  {% endif %}
-{% endif %}
 
-{% if result %}
-  {% if operation_name == "lend" %}
-    <h1>貸出を受け付けました。</h1>
-  {% elif operation_name == "return" %}
-    <h1>返却を受け付けました。</h1>
-  {% elif operation_name != "" %}
-    <h1>処理名にエラーが発見されました、管理者にお問い合わせください。</h1>
-  {% endif %}
-{% elif  result %}
-  <h1 class="error">処理に失敗いたしました、再度お願いいたします。</h1>
-{% endif %}
 
 <div class="container add_books">
   <div class="flex-wrapper">
@@ -65,6 +41,56 @@
         </div>
         <button class="btn" type="submit" formaction="{{url_for('lender.lend_process')}}">借りる</button>
         <button class="btn" type="submit" formaction="{{url_for('lender.return_process')}}">返す</button>
+      </form>
+    {% elif books_json is undefined %}
+      <form class="form-add">
+        {% if error != '' %}
+          {% if error == 0 %}
+            {% if count <= 3 %}
+              <p class="error-text">JANコードの読み取りに失敗しました<br/>もう一度お願いいたします</p>
+            {% elif count >= 4 %}
+              <p class="error-text">お求めの本のデータが存在しない可能性があります<br/>管理者にお問い合わせください</p>
+            {% endif %}
+          {% elif error == 1 %}
+            <p class="error-text">データが一致しませんでした<br/>お手数ですが再度お願いいたします</p>
+          {% elif error == 2 %}
+            <p class="error-text">貸出可能冊数に達しています<br/>現在貸し出すことができません</p>
+          {% endif %}
+        {% endif %}
+        
+        {% if result %}
+          {% if operation_name == "lend" %}
+            <p>貸出を受け付けました。</p>
+          {% elif operation_name == "return" %}
+            <p>返却を受け付けました。</p>
+          {% elif operation_name != "" %}
+            <p>処理名にエラーが発見されました、管理者にお問い合わせください。</p>
+          {% endif %}
+        {% elif  result %}
+          <p class="error">処理に失敗いたしました、再度お願いいたします。</p>
+        {% endif %}
+        <div class="form-item">
+          <label for="book-name">JANコード</label>
+          <input type="number" name="jancode" id="jancode" readonly>
+        </div>
+        <div class="form-item">
+          <label for="book-name">図書名</label>
+          <input type="text" name="book-name" id="book-name" readonly>
+        </div>
+        <div class="form-item">
+          <label for="author">著者名</label>
+          <input type="text" name="author" id="author" readonly>
+        </div>
+        <div class="form-item">
+          <label for="book-amount">冊数</label>
+          <input type="number" name="book-amount" id="book-amout" readonly>
+        </div>
+        <div class="form-item">
+          <label for="book-amount">貸出可能冊数</label>
+          <input type="number" name="book-amount" id="book-amout" readonly>
+        </div>
+        <button class="btn" type="button">借りる</button>
+        <button class="btn" type="button">返す</button>
       </form>
     {% endif %}
   </form>

@@ -1,0 +1,28 @@
+.list-img {
+    background-image: url(../images/listback.png);
+}
+
+.home-item {
+    /* background-color: red; */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.addbook-img {
+    background-image: url(../images/addbookback.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.qr-img {
+    background-image: url(../images/qrillust.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.lend-img {
+    background-image: url(../images/lendback.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
