@@ -89,19 +89,24 @@ const borderColorInit = () => {
 }
 
 register_btn.addEventListener('click',() => {
+  let statusArray = [];
   let status = false;
-
   inputElements.forEach( el => {
     if(el.value == '' || el.value.length == 0){
       el.style.border = '1px solid #f00';
       status = false;
-      err_text.innerText = '未入力の項目があります。';
     }else {
       el.style.border = '1px solid #000';
       status = true;
-      err_text.innerText = '';
     }
+
+    statusArray.push(status);
   })
 
-  if(status) form.submit();
+  if(statusArray.includes(false)){
+    err_text.innerText = '未入力項目があります';
+  } else {
+    err_text.innerText = '';
+    form.submit();
+  }
 });
