@@ -2,9 +2,15 @@
 
 {% block css %}
 <link rel="stylesheet" href="../static/css/qr.css">
+    <link rel="stylesheet" href="../static/css/create_qr_spinner.css">
 {% endblock %}
 
 {% block content %}
+    <div id="overlay">
+    <div class="cv-spinner">
+    <span class="spinner"></span>
+    </div>
+</div>
 <h2 class="page-title">QRコード作成</h2>
   <div class="container qr">
     <p class="form-info-text">QRコードを生成したい生徒を選択してください。</p>
@@ -28,9 +34,9 @@
           {% endfor %}
         {% endif %}
       </table>
-      <button type=submit class="btn">QR作成</button>
+      <button type=submit id="indicator" class="btn">QR作成</button>
     </form>
   </div>
-
-  <scrit src="../static/js/create_qr.js" type="text/javascript"></scrit>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="../static/js/create_qr.js" type="text/javascript"></script>
 {% endblock %}
