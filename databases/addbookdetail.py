@@ -4,7 +4,7 @@ def adbook_detail(jancord,title,author,stock):
     try:
         conn = connect_db()
         cur = conn.cursor()
-        sql = "INSERT INTO books VALUES(%s,%s,%s,%s)"
+        sql = "INSERT INTO books(jancord, title, author, amount) VALUES(%s,%s,%s,%s)"
         cur.execute(sql,(jancord,title,author,stock,))
         cur.close()
         conn.commit()
