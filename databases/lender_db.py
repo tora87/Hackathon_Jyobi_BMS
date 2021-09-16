@@ -133,7 +133,7 @@ def update_return_book(book_number: 'int', user_number: 'int') -> 'bool':
     conn = connect_db()
     cur = conn.cursor()
 
-    sql = 'update rental set status_flg = false where user_number = %s and books_jancord = %s and status_flg = true'
+    sql = 'update rental set status_flg = false where user_number = %s and books_jancord = %s and status_flg = true limit 1'
 
     flg = True
 

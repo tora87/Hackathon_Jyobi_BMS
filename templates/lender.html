@@ -1,33 +1,79 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.1, maximum-scale=4,user-scalable=yes">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/readonly.css') }}">
+{% extends 'template.html' %}
 
-</head>
-<body>
-  <div id="interactive"></div>
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/readonly.css') }}">
+{% endblock %}
 
-  <form action="/lender" method="POST" id="sendForm">
-    <input type="text" name="name" id="name" value="none..." readonly>
-  </form>
+{% block content %}
+<h2 class="page-title">貸借画面</h2>
 
-  {% if books_json is defined %}
-
-    {% for book in books_json %}
-      <p>{{ book.name }}</p>
-      <p>{{ book.author }}</p>
-      <p>{{ book.amount }}</p>
-      <p>{{ book.stock }}</p>
-    {% endfor %}
-
+<input type="hidden" id="errorsText" readonly/>
+{% if error != '' %}
+  {% if error == 0 %}
+    {% if count <= 3 %}
+      <p class="error-text">JANコードの読み取りに失敗しました、もう一度お願いいたします。</p>
+    {% elif count >= 4 %}
+      <p class="error-text">お求めの本のデータが存在しない可能性があります、管理者にお問い合わせください。</p>
+    {% endif %}
+  {% elif error == 1 %}
+    <p class="error-text">データが一致しませんでした、お手数ですが再度お願いいたします。</p>
+  {% elif error == 2 %}
+    <p class="error-text">貸出可能冊数に達しています。現在貸し出すことができません。</p>
   {% endif %}
+{% endif %}
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% if result %}
+  {% if operation_name == "lend" %}
+    <h1>貸出を受け付けました。</h1>
+  {% elif operation_name == "return" %}
+    <h1>返却を受け付けました。</h1>
+  {% elif operation_name != "" %}
+    <h1>処理名にエラーが発見されました、管理者にお問い合わせください。</h1>
+  {% endif %}
+{% elif  result %}
+  <h1 class="error">処理に失敗いたしました、再度お願いいたします。</h1>
+{% endif %}
 
-  <script type="text/javascript" src="../static/js/quagga.min.js" type="module"></script>
-  <script src="../static/js/lender.js" type="module"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/lender_ajax.js') }}"></script>
-</body>
-</html>
+<div class="container add_books">
+  <div class="flex-wrapper">
+      <div id="interactive">
+        <form action="{{url_for('lender.get_book')}}" method="POST" id="sendForm">
+          <input type="hidden" name="jan" id="jan">
+        </form>
+      </div>
+    {% if books_json is not undefined %}
+      <form class="form-add" method="POST">
+        <div class="form-item">
+          <label for="book-name">JANコード</label>
+          <input type="number" name="jancode" id="jancode" value={{books_json[0].book_id}} readonly>
+        </div>
+        <div class="form-item">
+          <label for="book-name">図書名</label>
+          <input type="text" name="book-name" id="book-name" value={{books_json[0].name}} readonly>
+        </div>
+        <div class="form-item">
+          <label for="author">著者名</label>
+          <input type="text" name="author" id="author" value={{books_json[0].author}} readonly>
+        </div>
+        <div class="form-item">
+          <label for="book-amount">冊数</label>
+          <input type="number" name="book-amount" id="book-amout" value={{books_json[0].amount}} readonly>
+        </div>
+        <div class="form-item">
+          <label for="book-amount">貸出可能冊数</label>
+          <input type="number" name="book-amount" id="book-amout" value={{books_json[0].stock}} readonly>
+        </div>
+        <button class="btn" type="submit" formaction="{{url_for('lender.lend_process')}}">借りる</button>
+        <button class="btn" type="submit" formaction="{{url_for('lender.return_process')}}">返す</button>
+      </form>
+    {% endif %}
+  </form>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript" src="../static/js/quagga.min.js" type="module"></script>
+<script src="../static/js/lender.js" type="module"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/lender_ajax.js') }}"></script>
+{% endblock %}

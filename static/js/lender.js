@@ -2,7 +2,7 @@ Quagga.init({
     inputStream: {
       name: 'Live',
       type: 'LiveStream',
-      target: document.querySelector('#interactive'), //埋め込んだdivのID
+      target: document.querySelector('#interactive'),
       constraints: {
         facingMode: 'environment',
       },
@@ -13,7 +13,7 @@ Quagga.init({
     },
     numOfWorkers: 2,
     decoder: {
-      readers: ['ean_reader'] //ISBNは基本的にこれ（他にも種類あり）
+      readers: ['ean_reader']
     },
     locate: true,
   }, (err) => {
@@ -23,20 +23,13 @@ Quagga.init({
   })
 
   const sendForm = document.getElementById('sendForm');
-  sendForm.innerHTML += `<p>hello</p>`;
+  const jancode = document.getElementById('jan');
 
+  const errorstext = document.getElementById('errorsText');
 
 Quagga.onDetected(success => {
     const code = success.codeResult.code;
-    window.alert(code);
+    jancode.value = code;
 
-    const name = document.getElementById('name');
-    name.value = code;
-    console.log(code);
-
-    // const sendForm = document.getElementById('sendForm');
-    console.log(sendForm);
-
-    // sendForm.submit();
+    sendForm.submit();
 })
-
