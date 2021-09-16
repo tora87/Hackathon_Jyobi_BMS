@@ -12,7 +12,7 @@ $(function () {
             console.log(err);
         })
     })
-    $(".btn-outline-primary").on("click", function () {
+    $("#search_Btn").on("click", function () {
         let kw = $("#search_text_form").val();
         $.ajax({
             type: 'POST',
@@ -25,4 +25,15 @@ $(function () {
         })
     })
 
+    $("#reset_Btn").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: '/booklist/search',
+            data: {'key': ''},
+        }).done(function (res) {
+            $('body').html(res);
+        }).error(function (err) {
+            console.log(err);
+        })
+    })
 })
