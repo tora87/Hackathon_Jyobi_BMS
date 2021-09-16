@@ -300,6 +300,14 @@ label {
 
 .add-error-text {
   color: #f00;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#add-error-text  {
+  color: #f00;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 /* login.html */
