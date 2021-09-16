@@ -14,13 +14,18 @@
 <div class="container-fluid">
   <form class="d-flex">
       <select id="select_number_form">
-        <option disabled selected hidden>学籍番号</option>
+        {% if "search_number" not in session %}
+          <option disabled selected hidden>学籍番号</option>
+        {% else %}
+          <option selected hidden value="{{session.search_number}}">{{session.search_number}} ~</option>
+        {% endif %}
         {% for number in number_scope %}
         <option class="num_options" value="{{number[0]}}">{{number[0]}} ~</option>
         {% endfor %}
       </select>
-      <input id="search_text_form" class="form-control me-6" type="search" placeholder="Search" aria-label="Search">
+      <input id="search_text_form" class="form-control me-6" type="search" placeholder="Search" aria-label="Search" value="{{session.search_keyword}}">
       <button id="search_Btn" class="btn btn-outline-primary" type="button">検索</button>
+        <button id="reset_Btn" class="btn btn-outline-primary" type="button">リセット</button>
   </form>
 </div>
 <h2 class="page-title">QRコード作成</h2>

@@ -14,4 +14,16 @@ $(function() {
 			console.log(err);
 		})
 	})
+
+	$("#reset_Btn").on('click', function() {
+		$.ajax({
+			type: "POST",
+			url: '/generate-qr/search',
+			data: {'selectnum': '', 'keywords': ''},
+		}).done(function (res) {
+			$('body').html(res);
+		}).error(function (err) {
+			console.log(err);
+		})
+	})
 })
