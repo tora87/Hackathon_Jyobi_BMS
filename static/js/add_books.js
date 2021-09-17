@@ -39,13 +39,7 @@ const getData = async( code ) => {
   await fetch(URL)
   .then( response => response.json() )
   .then( data => {
-    if(data['totalItems'] > 0) {
-      if(data['items'].length == 1){
-        result = data['items'];
-      }else{
-        result = data['items'][0];
-      }
-    }
+    if(data['totalItems'] > 0) result = data['items'][0];
   });
 
   return result;
