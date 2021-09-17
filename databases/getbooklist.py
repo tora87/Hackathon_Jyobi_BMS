@@ -24,7 +24,7 @@ def select_bookdetail(jancord):
         sql = """SELECT jancord,title,author,amount,
                 (amount - (
                     SELECT COUNT(id) FROM rental WHERE books_jancord=books.jancord AND status_flg=true)
-                ) as renokamo from books WHERE jancord=%s"""
+                ) as renokamo, delete_flg from books WHERE jancord=%s"""
         cur.execute(sql, (jancord,))
         sel_book_detail = list(cur.fetchone())
         cur.close()

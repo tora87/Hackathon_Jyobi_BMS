@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, render_template, request, session, redirect
 from flask.wrappers import Request
 from databases.getbooklist import select_bookdetail
-from databases.addbookdetail import adbook_detail
+from databases.addbookdetail import adbook_detail, reregist_book
 books = Blueprint('add_books', __name__, url_prefix='/add_books')
 
 
@@ -16,15 +16,23 @@ def add_books():
         success=0
         error=0
         jancord = request.form.get("jancord")
-        if (select_bookdetail(jancord)) == None:
-            title = request.form.get("book-name")
-            author = request.form.get("author")
-            stock = request.form.get("book-amount")
+        title = request.form.get("book-name")
+        author = request.form.get("author")
+        stock = request.form.get("book-amount")
+        detail = select_bookdetail(jancord) # 重複図書の確認
+        if (detail) == None:
             result = adbook_detail(jancord,title,author,stock)
             if result:
                 success = 1
             else:
                 error = 1
         else:
-            error = 2
+            if (detail[5] == 1): # 削除されている場合は内容変更し一覧再表示
+                result = reregist_book(jancord,title,author,stock)
+                if result:
+                    success = 1
+                else:
+                    error = 1
+            else:
+                error = 2
         return render_template('add_books.html', error=error, success=success)
