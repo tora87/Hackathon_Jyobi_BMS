@@ -9,6 +9,22 @@
     background-position: left center;
 }
 
+.home-item:nth-child(1) {
+    text-indent: 140px;
+}
+
+.home-item:nth-child(2) {
+    text-indent: 105px;
+}
+
+.home-item:nth-child(3) {
+    text-indent: 100px;
+}
+
+.home-item:nth-child(4) {
+    text-indent: 105px;
+}
+
 .addbook-img {
     background-image: url(../images/addbookback.png);
     background-size: contain;
