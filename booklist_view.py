@@ -41,6 +41,7 @@ def search_book_list():
     if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
     keyword = request.form.get("key")
+    session["book_keyword"] = keyword
     sel_search_books = select_searchbooks(keyword)
     print(sel_search_books)
     session['book_list'] = sel_search_books
