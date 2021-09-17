@@ -2,12 +2,14 @@
 
 {% block css %}
 <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/edit.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css') }}">
 {% endblock %}
 
 {% block content %}
 <h2 class="page-title">編集画面</h2>
   <div class="container edit">
-    <form method='POST' class="form-edit" id="form-edit">
+    <form method='POST' class="form-edit" id="form-edit" autocomplete="off">
       <p id="add-error-text"></p>
       <div class="form-item">
         <label for="name">作品名</label><input type="text" id="name" name="name" value="{{sel_book_detail[1]}}">
