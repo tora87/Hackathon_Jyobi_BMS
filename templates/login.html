@@ -28,14 +28,19 @@
       <canvas id="mycanvas"></canvas>
     </div>
     <form id="stInformation" enctype="multipart/form-data" action="{{url_for('login_top.login_process')}}" method="POST">
-      <input class="form-item" type="file" accept="image/*" capture="camera" name="file" id="file-image"/></br>
+      <div class="form-item">
+        <label for="file-image" class="wide">
+          <input type="file" accept="image/*" capture="camera" name="file" id="file-image"/>ファイルを選択
+        </label>
+        <span id="selected-file-name">選択されていません</span>
+      </div>
       <div class="form-item">
         <label for="studentNumber">学籍番号</label><input type="text" id=studentNumber name="user_id" readonly>
       </div>
       <div class="form-item">
         <label for="studentName">氏名&emsp;&emsp;</label><input type="text" id=studentName name="user_name" readonly>
       </div>
-      <div class="form-item"><input type="submit" value="ログイン" class="btn"></div>
+      <div class="form-item"><input id="login-btn" type="button" value="ログイン" class="btn"></div>
       <p id="errorText"></p>
     </form>
   </div>

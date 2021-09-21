@@ -99,19 +99,30 @@ function checkQRCode(){
                     student_number.value = splitStr[0];
                     student_name.value = splitStr[1];
                 } else {
-                    error_text.innerText = `氏名が不正な値です。`;
+                    error_text.innerText = `氏名が不正な値です`;
                 }
             }else{
-                error_text.innerText = `学籍番号が不正な値です。`;
+                error_text.innerText = `学籍番号が不正な値です`;
             }
         }else{
-            error_text.innerText = "QRコードの読み込みに失敗しました。\n 再度選択してください。";
+            error_text.innerText = "QRコードの読み込みに失敗しました。\n 再度選択してください";
         }
     } catch(error){
         errorcount++;
         if(errorcount <= 3){
-        error_text.innerText = `${error}\nシステムエラーです、管理者にお問い合わせください。`;
+        error_text.innerText = `${error}\nシステムエラーです、管理者にお問い合わせください`;
         }
-        error_text.innerText = `処理に失敗しました。\n もう一度お願いいたします。`;
+        error_text.innerText = `処理に失敗しました。\n もう一度お願いいたします`;
     }
 }
+const selected_file_name = document.getElementById('selected-file-name');
+
+file_image.addEventListener('change',() => {
+    const file = file_image.files[0];
+    selected_file_name.innerText = file.name;
+})
+
+const login_btn = document.getElementById('login-btn');
+login_btn.addEventListener('click',() => {
+    error_text.innerText = file_image.files[0] === undefined ? 'QRコードファイルを選択してください' : '';
+})
