@@ -1,8 +1,15 @@
 document.addEventListener('DOMContentLoaded',() => {
   const inputElements = document.querySelectorAll('input');
+  const stocknum = document.getElementById('stock');
   const edit_btn = document.getElementById('edit-btn');
   const err_text = document.getElementById('add-error-text');
   const form = document.getElementById('form-edit');
+
+  stocknum.addEventListener('focusout', () => {
+    if (stocknum.value < stocknum.min) {
+      stocknum.value = stocknum.min;
+    }
+  })
 
   edit_btn.addEventListener('click',() => {
     form.action = edit_btn.formAction;
