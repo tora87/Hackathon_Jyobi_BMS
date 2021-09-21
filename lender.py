@@ -30,6 +30,8 @@ def get_book():
         return render_template('lender.html', error=error, count=session['counter'])
 
     book = lender_db.select_specify_books(book_id=jan)
+    count = lender_db.select_history_lend_book(book_id=jan, user_id=session['user_id'])
+    print(count)
 
     if book is None:
         session['counter'] += 1
@@ -38,12 +40,14 @@ def get_book():
 
     book_data = []
     stock = book[3] if book[4] is None else int(book[3]) - int(book[4])
+    flg = False if count[0] > 0 else True
     book_data.append({
         'book_id': book[0],
         'name': book[1],
         'author': book[2],
         'amount': book[3],
         'stock': stock,
+        'flg': flg,
     })
 
     return render_template('lender.html', books_json=book_data)
