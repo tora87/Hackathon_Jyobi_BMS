@@ -9,6 +9,7 @@ const file_image = document.getElementById( 'file-image' );
 const student_number = document.getElementById('studentNumber');
 const student_name = document.getElementById('studentName');
 const error_text = document.getElementById('errorText');
+let check = false;
 
 file_image.addEventListener( 'change', selectReadFile, false );
 
@@ -98,6 +99,7 @@ function checkQRCode(){
                 if(splitStr[1].length <= 40){
                     student_number.value = splitStr[0];
                     student_name.value = splitStr[1];
+                    check = true;
                 } else {
                     error_text.innerText = `氏名が不正な値です`;
                 }
@@ -108,6 +110,7 @@ function checkQRCode(){
             error_text.innerText = "QRコードの読み込みに失敗しました。\n 再度選択してください";
         }
     } catch(error){
+        console.log(error);
         errorcount++;
         if(errorcount <= 3){
         error_text.innerText = `${error}\nシステムエラーです、管理者にお問い合わせください`;
@@ -123,6 +126,12 @@ file_image.addEventListener('change',() => {
 })
 
 const login_btn = document.getElementById('login-btn');
+const login_form = document.getElementById('stInformation');
 login_btn.addEventListener('click',() => {
-    error_text.innerText = file_image.files[0] === undefined ? 'QRコードファイルを選択してください' : '';
+    if(file_image.files[0] !== undefined && check) {
+        error_text.innerText = '';
+        login_form.submit();
+    }else{
+        error_text.innerText = 'QRコードファイルを選択してください'
+    }
 })
