@@ -32,13 +32,16 @@
   <div class="container qr">
     <p class="form-info-text">QRコードを生成したい生徒を選択してください。</p>
     <form action="" class="form-create-qr" method="post">
-      <table class="form-table">
+      <table id="form-table-header" class="form-table">
         <tr>
-          <th></th>
-          <th>学籍番号</th>
-          <th>生徒名</th>
+          <th width="8.25%"></th>
+          <th width="17.7%">学籍番号</th>
+          <th width="19.5%">生徒名</th>
           <th>メールアドレス</th>
         </tr>
+      </table>
+      <div id="scroll_table">
+        <table class="form-table">
         <!-- 動的に増える部分 -->
         {% if user_data is defined %}
           {% for user in user_data %}
@@ -50,7 +53,8 @@
           </tr>
           {% endfor %}
         {% endif %}
-      </table>
+        </table>
+      </div>
       <button type=submit id="indicator" class="btn">QR作成</button>
     </form>
   </div>

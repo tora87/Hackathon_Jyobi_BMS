@@ -6,7 +6,7 @@ def select_allbooks():
     try:
         conn = connect_db()
         cur = conn.cursor()
-        sql = "SELECT jancord, title from books"
+        sql = "SELECT jancord, title from books WHERE delete_flg=0"
         cur.execute(sql,)
         books_all_table = list(cur.fetchall())
         cur.close()
@@ -21,14 +21,10 @@ def select_bookdetail(jancord):
     try:
         conn = connect_db()
         cur = conn.cursor()
-        sql = """SELECT jancord,
-                title,
-                author,
-                amount,
-                (amount - (SELECT COUNT(id) FROM rental
-                    WHERE books_jancord=books.jancord AND
-                    status_flg=true)) as renokamo
-                from books WHERE jancord=%s"""
+        sql = """SELECT jancord,title,author,amount,
+                (amount - (
+                    SELECT COUNT(id) FROM rental WHERE books_jancord=books.jancord AND status_flg=true)
+                ) as renokamo, delete_flg from books WHERE jancord=%s"""
         cur.execute(sql, (jancord,))
         sel_book_detail = list(cur.fetchone())
         cur.close()
@@ -42,8 +38,7 @@ def select_searchbooks(keyword):
     try:
         conn = connect_db()
         cur = conn.cursor()
-        sql = "SELECT jancord, title from books WHERE title LIKE %s"
-        # sql = "SELECT jancord, title from books WHERE title LIKE '%教育%'"
+        sql = "SELECT jancord, title from books WHERE delete_flg=0 AND title LIKE %s"
         cur.execute(sql,('%'+keyword+'%',))
         sel_search_books = list(cur.fetchall())
         cur.close()

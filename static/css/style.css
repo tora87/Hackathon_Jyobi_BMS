@@ -69,7 +69,7 @@ header .btn {
 }
 
 .page-title {
-  margin: 20px 0;
+  padding: 20px 0;
   text-align: center;
 }
 
@@ -184,7 +184,7 @@ i.fas.fa-sign-out-alt{
   padding: 50px;
   display: block;
   background: rgb(182, 226, 255);
-  text-align: center;
+  text-align: right;
   font-size: 3rem;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0,0,0,.3);
@@ -300,6 +300,14 @@ label {
 
 .add-error-text {
   color: #f00;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#add-error-text  {
+  color: #f00;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 /* login.html */

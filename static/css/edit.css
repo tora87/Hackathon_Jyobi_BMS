@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+.page-title {
+    margin-bottom: 0;
+}
+
+.form-edit {
+    width: 75%;
+    margin-top: 0;
+}
+
+.form-edit p {
+    height: 24px;
+    margin-bottom: 24px;
+}
+
+.form-item {
+    border-bottom: solid 1.5px #7e97ed;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 35px;
+}
+
+.form-item:hover > label {
+    transform: translateY(-5px);
+    transition: .5s;
+}
+
+.form-item:focus-within > label {
+    transform: translateY(-5px);
+    transition: .5s;
+}
+
+.form-item label {
+    color: #7e97ed;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.form-item input {
+    border: none;
+    color: #9c9c9c;
+    width: calc(100% - 100px);
+    text-overflow: ellipsis;
+}
+
+.form-item input:focus {
+    outline: none;
+}
