@@ -9,12 +9,12 @@
   <h2 class="page-title">ホーム画面</h2>
   <div class="container home">
     <div class="home-items">
-      <a href="{{url_for('booklist_view.booklist_view')}}" class="home-item list-img">一覧</a>
+      <a href="{{url_for('booklist_view.booklist_view')}}" class="home-item list-img"><div>一覧</div></a>
         {% if session.get('user_id')[0] == '0'  %}
-        <a href="{{url_for('add_books.add_books')}}" class="home-item addbook-img">追加</a>
-        <a href="{{url_for('create_qr.make_qr')}}" class="home-item qr-img">QR作成</a>
+        <a href="{{url_for('add_books.add_books')}}" class="home-item addbook-img"><div>追加</div></a>
+        <a href="{{url_for('create_qr.make_qr')}}" class="home-item qr-img"><div>QR作成</div></a>
         {% endif %}
-      <a href="{{url_for('lender.get_lender')}}" class="home-item lend-img">貸借</a>
+      <a href="{{url_for('lender.get_lender')}}" class="home-item lend-img"><div>貸借</div></a>
     </div>
   </div>
   <script type="text/javascript" src="{{ url_for('static', filename='/js/home.js') }}"></script>

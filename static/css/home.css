@@ -4,41 +4,40 @@
 
 .home-item {
     /* background-color: red; */
-    background-size: contain;
+    background-size: 50% auto;
     background-repeat: no-repeat;
     background-position: left center;
+    line-height: 100%;
+
+    display: -moz-box;
+    display: -webkit-box;
+    display: -o-box;
+    display: -ms-box;
+    display: box;
 }
 
-.home-item:nth-child(1) {
-    text-indent: 140px;
+.home-item div {
+    width: 100%;
+    display: block;
+    margin: auto 0;
+    float: right;
 }
 
-.home-item:nth-child(2) {
-    text-indent: 105px;
-}
-
-.home-item:nth-child(3) {
-    text-indent: 100px;
-}
-
-.home-item:nth-child(4) {
-    text-indent: 105px;
-}
 
 .addbook-img {
     background-image: url(../images/addbookback.png);
-    background-size: contain;
+    /*background-size: contain;*/
     background-repeat: no-repeat;
 }
 
 .qr-img {
     background-image: url(../images/qrillust.png);
-    background-size: contain;
+    /*background-size: contain;*/
     background-repeat: no-repeat;
 }
 
 .lend-img {
     background-image: url(../images/lendback.png);
-    background-size: contain;
+    /*background-size: contain;*/
     background-repeat: no-repeat;
 }
