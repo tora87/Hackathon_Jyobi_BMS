@@ -181,6 +181,7 @@ i.fas.fa-sign-out-alt{
 
 .home-items {
   width: 100%;
+  height: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -197,6 +198,7 @@ i.fas.fa-sign-out-alt{
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0,0,0,.3);
   transition: .3s;
+  align-self: stretch;
 }
 
 .home-item:hover {
