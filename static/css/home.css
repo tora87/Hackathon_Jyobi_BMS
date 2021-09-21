@@ -41,3 +41,7 @@
     /*background-size: contain;*/
     background-repeat: no-repeat;
 }
+
+.lend-img div {
+    font-size: 24px;
+}
