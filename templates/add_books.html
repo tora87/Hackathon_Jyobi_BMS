@@ -39,7 +39,7 @@
         </div>
         <div class="form-item">
           <label for="book-amount">冊数</label>
-          <input type="number" name="book-amount" id="book-amount">
+          <input type="number" name="book-amount" id="book-amount" onkeydown="checkKeyCode()">
         </div>
       <button type="button" class="btn" id="register-btn">登録</button>
       </form>
@@ -47,4 +47,20 @@
   </div>
   <script src="../static/js/add_books.js" type="module"></script>
   <script type="text/javascript" src="../static/js/quagga.min.js" type="module"></script>
+    <script>
+    function checkKeyCode() {
+        if (event.keyCode === 69) {
+            event.returnValue = false;
+        }
+        else if (event.keyCode === 187) {
+            event.returnValue = false;
+        }
+        else if (event.keyCode === 189) {
+            event.returnValue = false;
+        }
+        else if (event.keyCode === 190) {
+            event.returnValue = false;
+        }
+    }
+    </script>
 {% endblock %}
