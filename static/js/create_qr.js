@@ -26,4 +26,8 @@ $(function() {
 			console.log(err);
 		})
 	})
+
+	$("#indicator").on("click", function() {
+		$("#overlay").show();
+	})
 })
