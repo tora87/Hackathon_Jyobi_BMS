@@ -2,3 +2,6 @@ Flask~=1.1.2
 qrcode~=6.1
 slack-bolt~=1.7.0
 slack-sdk~=3.8.0
+
+Werkzeug~=1.0.1
+mysqlclient~=2.0.3
