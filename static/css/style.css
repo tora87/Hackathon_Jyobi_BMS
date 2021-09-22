@@ -179,7 +179,12 @@ i.fas.fa-sign-out-alt{
   align-items: center;
 }
 
-.container.add_books {
+.container.home {
+  width: 70%;
+}
+
+.container.add_books,
+.container.lender {
   width: 70%;
   margin: 0 auto;
 }
@@ -293,6 +298,13 @@ li a {
 /* add_books.html */
 #interactive {
   flex: 1;
+  position: relative;
+}
+
+.drawingBuffer {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .form-add {
@@ -467,13 +479,17 @@ label.wide {
     font-size: 13px;
   }
 
+  .page-title {
+    font-size: 1.2em;
+  }
+
   .header-wrapper{
     width: 100%;
     height: 60px;
   }
 
   .container.login{
-    width: 100%;
+    width: 80%;
   }
   .canvas-wrapper {
     width: 100px;
@@ -494,13 +510,58 @@ label.wide {
   }
 
   .home-item {
-    margin: 0 auto;
+    margin: 0 auto 50px;
     width: 80%;
     font-size: inherit;
   }
 
   a.home-item > div {
     font-size: 1.8rem;
+  }
+
+  /* books_list */
+  .container.books_list .flex-wrapper{
+    display: block;
+  }
+
+  .container.books_list .page-title {
+    padding: 10px;
+  }
+
+  .book-detail.active {
+    width: 80%;
+    display: block;
+    position: relative;
+    top: -400px;
+    left: 50%;
+    background: rgb(255, 255, 255);
+    transform: translateX(-50%);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,.5);
+    z-index: 3;
+  }
+
+  .fa-times {
+    position: absolute;
+    top: 5px ;
+    right: 10px;
+  }
+
+  /* lender */
+  .container.lender {
+    width: 80%;
+  }
+
+  video {
+    width: 100%;
+  }
+
+  .lender .flex-wrapper {
+    display: block;
+  }
+
+  .drawingBuffer {
+    width: 250px;
   }
 }
 
