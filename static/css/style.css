@@ -440,9 +440,8 @@ label.wide {
     background: rgb(143, 210, 255);
     position: fixed;
     top: 0;
-    right: 0;
+    right: -100%;
     z-index: 30;
-    transform: translateX(100%);
     transition: .3s;
     display: flex;
     flex-direction: column;
@@ -451,14 +450,8 @@ label.wide {
   }
 
   #humburger-menu-content.active {
-    transform: translateX(0);
+    right: 0;
   }
-
-  /* #humburger-menu-content ul {
-    width: 100%;
-    height: 50%;
-    background: #000;
-  } */
 
   .hmc-item {
     margin: 40px 0;
@@ -528,23 +521,40 @@ label.wide {
     padding: 10px;
   }
 
+  .book-detail.flex-item {
+    padding: 0;
+  }
+
   .book-detail.active {
-    width: 80%;
+    width: 90%;
     display: block;
-    position: relative;
-    top: -400px;
+    position: absolute;
+    top: 50%;
     left: 50%;
     background: rgb(255, 255, 255);
-    transform: translateX(-50%);
+    transform: translate(-50%,-50%);
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0,0,0,.5);
     z-index: 3;
+  }
+
+  .to-relative {
+    width: 100%;
+    height: 100%;
+    padding: 3rem;
+    position: relative;
+    top: 0;
+    left: 0;
   }
 
   .fa-times {
     position: absolute;
     top: 5px ;
     right: 10px;
+  }
+
+  .booklist_result {
+    text-align: left;
   }
 
   /* lender */
