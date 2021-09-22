@@ -10,6 +10,8 @@ books = Blueprint('add_books', __name__, url_prefix='/add_books')
 def add_books():
     if "user_id" not in session: #? セッションの有無
         return redirect("/")
+    if session["user_id"][0] != '0': #? 管理者アカウントかの確認
+        return redirect("/login-top/top_page")
     if request.method == "GET":
         return render_template('add_books.html')
     else:
