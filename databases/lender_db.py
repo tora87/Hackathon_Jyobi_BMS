@@ -73,6 +73,45 @@ def select_specify_books(book_id: 'int') -> 'data or None':
     return book
 
 
+def select_history_lend_book(book_id: 'int', user_id: 'int') -> 'data or None':
+    """
+    読み取った本を借りているかどうか検索する
+
+    Parameters
+    ----------
+    book_id : integer
+        検索する本のjanコード
+    user_id : Integer
+        ログインしているユーザの学籍番号
+
+    Returns
+    ----------
+    data: tuple (tuple1, tuple2, tuple3...)
+        登録された情報と、現在借りられている冊数
+    data[any]: tuple (jancord, title, author, amount, count)
+        janコード、タイトル、著者、数量、現在の貸出数
+    """
+
+    conn = connect_db()
+    cur = conn.cursor()
+
+    sql = 'select count(*) from rental where user_number = %s and books_jancord = %s and status_flg = True'
+
+    try:
+        cur.execute(sql, (user_id, book_id,))
+    except Exception as e:
+        print('SQL実行に失敗しました:', e)
+        return None
+
+    book = cur.fetchone()
+
+    cur.close()
+    # conn.commit()
+    conn.close()
+
+    return book
+
+
 def insert_specify_book(book_number: 'int', user_number: 'int',) -> 'bool':
     """
     借りる本のjanコードと、借りる生徒の学籍番号を渡すと、rentalテーブルにレコードを追加する
@@ -161,8 +200,11 @@ def update_return_book(book_number: 'int', user_number: 'int') -> 'bool':
 
 
 if __name__ == '__main__':
-    record = select_specify_books(book_id=2013031003351)
-    print(record)
+    # record = select_specify_books(book_id=2013031003351)
+    # print(record)
+    
+    recode = select_history_lend_book(book_id=4500000000003, user_id=4204101)
+    print(recode)
     
     # flg = insert_specify_book(book_number='2013031003351', user_number='4204101')
     # if flg:

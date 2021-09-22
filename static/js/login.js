@@ -9,6 +9,7 @@ const file_image = document.getElementById( 'file-image' );
 const student_number = document.getElementById('studentNumber');
 const student_name = document.getElementById('studentName');
 const error_text = document.getElementById('errorText');
+let check = false;
 
 file_image.addEventListener( 'change', selectReadFile, false );
 
@@ -98,20 +99,39 @@ function checkQRCode(){
                 if(splitStr[1].length <= 40){
                     student_number.value = splitStr[0];
                     student_name.value = splitStr[1];
+                    check = true;
                 } else {
-                    error_text.innerText = `氏名が不正な値です。`;
+                    error_text.innerText = `氏名が不正な値です`;
                 }
             }else{
-                error_text.innerText = `学籍番号が不正な値です。`;
+                error_text.innerText = `学籍番号が不正な値です`;
             }
         }else{
-            error_text.innerText = "QRコードの読み込みに失敗しました。\n 再度選択してください。";
+            error_text.innerText = "QRコードの読み込みに失敗しました。\n 再度選択してください";
         }
     } catch(error){
+        console.log(error);
         errorcount++;
         if(errorcount <= 3){
-        error_text.innerText = `${error}\nシステムエラーです、管理者にお問い合わせください。`;
+        error_text.innerText = `${error}\nシステムエラーです、管理者にお問い合わせください`;
         }
-        error_text.innerText = `処理に失敗しました。\n もう一度お願いいたします。`;
+        error_text.innerText = `処理に失敗しました。\n もう一度お願いいたします`;
     }
 }
+const selected_file_name = document.getElementById('selected-file-name');
+
+file_image.addEventListener('change',() => {
+    const file = file_image.files[0];
+    selected_file_name.innerText = file.name;
+})
+
+const login_btn = document.getElementById('login-btn');
+const login_form = document.getElementById('stInformation');
+login_btn.addEventListener('click',() => {
+    if(file_image.files[0] !== undefined && check) {
+        error_text.innerText = '';
+        login_form.submit();
+    }else{
+        error_text.innerText = 'QRコードファイルを選択してください'
+    }
+})

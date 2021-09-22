@@ -39,8 +39,17 @@
           <label for="book-amount">貸出可能冊数</label>
           <input type="number" name="book-amount" id="book-amout" value={{books_json[0].stock}} readonly>
         </div>
-        <button class="btn" type="submit" formaction="{{url_for('lender.lend_process')}}">借りる</button>
-        <button class="btn" type="submit" formaction="{{url_for('lender.return_process')}}">返す</button>
+          {% if books_json[0].flg is not defined %}
+              this is it
+{#        <button class="btn" type="submit" formaction="{{url_for('lender.lend_process')}}">借りる</button>#}
+{#            <button class="btn" type="submit" formaction="{{url_for('lender.return_process')}}">返す</button>#}
+          {% elif books_json[0].flg == True %}
+            <button class="btn" type="submit" formaction="{{url_for('lender.lend_process')}}">借りる</button>
+          {% elif books_json[0].flg == False %}
+            <button class="btn" type="submit" formaction="{{url_for('lender.return_process')}}">返す</button>
+          {% endif %}
+
+
       </form>
     {% elif books_json is undefined %}
       <form class="form-add">
@@ -89,8 +98,14 @@
           <label for="book-amount">貸出可能冊数</label>
           <input type="number" name="book-amount" id="book-amout" readonly>
         </div>
-        <button class="btn" type="button">借りる</button>
-        <button class="btn" type="button">返す</button>
+{#      {% if books_json[0].flg is defined %}#}
+{#        <button class="btn" type="button">借りる</button>#}
+{#        <button class="btn" type="button">返さない</button>#}
+{#      {% elif books_json[0].flg is true %}#}
+{#        <button class="btn" type="button">借りない</button>#}
+{#      {% elif books_json[0].flg is false %}#}
+{#        <button class="btn" type="button">返さない</button>#}
+{#      {% endif %}#}
       </form>
     {% endif %}
   </form>
