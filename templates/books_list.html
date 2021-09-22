@@ -1,7 +1,7 @@
 {% extends 'template.html' %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_search .css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_search.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_scroll.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/booklist_result.css') }}">
     <link rel="stylesheet" href="../static/css/booklist_search.css">
@@ -60,7 +60,8 @@
             </ul>
             </div>
 
-            <div class="book-detail flex-item">
+            <div class="book-detail flex-item pc" id="book-detail">
+                <i class="fas fa-times sp" id="close-btn"></i>
                 {% if sel_book_detail|length!=0 %}
                 <div class="booklist_result">
                     <label for="name">作品名</label
@@ -109,7 +110,7 @@
             </div>
         </div>
     </div>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='/js/book_list_ajax.js') }}"></script>
 {% endblock %}
 

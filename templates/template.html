@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/logout-spinner.css') }}">
   {% block css %}{% endblock %}
   {% block script %}
-  <script src="../static/js/humburger.js"></script>
+  
   {% endblock %}
   <title>Jyobi-BMS</title>
 </head>
@@ -58,7 +58,7 @@
       </div>
     </div>
   </header>
-  <div class="header-bottom">
+  <div class="header-bottom pc">
       {% if session.get('user_id') == none %}
       {% else %}
           <div id="back_button" class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
@@ -88,5 +88,6 @@
   {% endblock%}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript" src="../static/js/logoutSpinner.js"></script>
+  <script type="text/javascript" src="../static/js/humburger.js"></script>
 </body>
 </html>
