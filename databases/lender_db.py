@@ -54,7 +54,7 @@ def select_specify_books(book_id: 'int') -> 'data or None':
     conn = connect_db()
     cur = conn.cursor()
 
-    sql = 'select jancord, title, author, amount, cnt from books left outer join (select books_jancord, count(*) as ' \
+    sql = 'select jancord, title, author, amount, cnt, delete_flg from books left outer join (select books_jancord, count(*) as ' \
           'cnt from rental where status_flg = True group by books_jancord) as rental_books on jancord = ' \
           'rental_books.books_jancord where jancord = %s '
 

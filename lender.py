@@ -31,9 +31,15 @@ def get_book():
 
     book = lender_db.select_specify_books(book_id=jan)
     count = lender_db.select_history_lend_book(book_id=jan, user_id=session['user_id'])
-    print(count)
+    print(book)
 
     if book is None:
+        session['counter'] += 1
+        error = 0
+        return render_template('lender.html', error=error, count=session['counter'])
+
+    if book[5] is True or book[5] == 1:
+        print('error')
         session['counter'] += 1
         error = 0
         return render_template('lender.html', error=error, count=session['counter'])
