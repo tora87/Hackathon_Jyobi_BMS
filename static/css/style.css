@@ -503,7 +503,7 @@ label.wide {
   }
 
   .home-item {
-    margin: 0 auto 50px;
+    margin: 0 auto 20px !important;
     width: 80%;
     font-size: inherit;
   }
@@ -572,6 +572,11 @@ label.wide {
 
   .drawingBuffer {
     width: 250px;
+  }
+
+  /* add_books */
+  .add_books .flex-wrapper {
+    display: block;
   }
 }
 
