@@ -1,0 +1,40 @@
+{% extends 'template.html' %}
+
+{% block css %}
+	<link rel="stylesheet" href="{{url_for('static', filename='css/history.css')}}">
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h2 class="page-title">貸出履歴</h2>
+		<table class="table-header">
+			<tr>
+				<th width="55%">図書名</th>
+				<th width="15%">返却日</th>
+				{% if session.get('user_id')[0] == '0' %}
+				<th width="16.25%">学籍番号<br>氏名</th>
+				{% endif %}
+				<th width="14%">返却状態</th>
+			</tr>
+		</table>
+		<div id="scroll_table">
+			<table class="history-content">
+				{% for item in session['history'] %}
+				<tr>
+					<td width="55%">{{item[0]}}</td>
+					<td width="15%">{{item[1]}}</td>
+					{% if session.get('user_id')[0] == '0' %}
+					<td width="16.25%"><small>{{item[3]}}</small><p class="center-name">{{item[4]}}</p></td>
+					{% endif %}
+					<td width="14%">{% if item[2]==1 %}
+						返却済み
+						{% else %}
+						貸出中
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}

@@ -3,13 +3,22 @@
 
 
 .container-fluid {
+    display: flex;
     text-align: center;
     position: absolute;
     top: 90px;
-    width: 700px;
+    /* width: 700px; */
     margin: auto;
     left: 0;
     right: 0;
+}
+
+.rental_history {
+    margin-right: 20px;
+}
+
+.d-flex {
+    margin: auto;
 }
 
 .container-fluid .d-flex .form-control {

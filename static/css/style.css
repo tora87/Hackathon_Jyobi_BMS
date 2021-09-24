@@ -53,6 +53,10 @@ button {
   color: #f00;
 }
 
+#back_button {
+  z-index: 100;
+}
+
 .btn {
   padding: 5px 10px;
   background: #fff;

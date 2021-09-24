@@ -6,6 +6,7 @@ from booklist_view import bol_view
 from add_books import books
 from lender import lend
 from create_qr import qr
+from history_view import hist
 
 from flask import Flask, Blueprint, redirect, url_for
 
@@ -28,6 +29,8 @@ app.register_blueprint(lend)
 # qrコード
 app.register_blueprint(qr)
 
+# 貸出履歴一覧
+app.register_blueprint(hist)
 
 @app.route('/')
 def default_transition():
