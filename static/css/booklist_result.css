@@ -11,6 +11,7 @@
 
 .booklist_result {
     border-bottom: 1.5px solid #7e97ed;
+    margin-bottom: 15px;
 }
 
 .book-detail input {
