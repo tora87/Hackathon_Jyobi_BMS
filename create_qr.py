@@ -28,6 +28,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\Hack
 def make_qr():
     if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
+    if session["user_id"][0] != '0': #? 管理者アカウントかの確認
+        return redirect("/login-top/top_page")
     user_data = create_qr_db.select_all_user()
     number_scope = create_qr_db.select_number_scope()
     user_list = []
@@ -43,6 +45,8 @@ def make_qr():
 def make_qr_searchuser():
     if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
+    if session["user_id"][0] != '0': #? 管理者アカウントかの確認
+        return redirect("/login-top/top_page")
     selectnum = request.form.get("selectnum")
     keywords = request.form.get("keywords")
     if selectnum != '':
@@ -70,6 +74,8 @@ def make_qr_searchuser():
 def send_qr():
     if "user_id" not in session:  # ? セッションの有無
         return redirect("/")
+    if session["user_id"][0] != '0': #? 管理者アカウントかの確認
+        return redirect("/login-top/top_page")
 
     # クライアント側から送られてきたデータから、選択されたユーザの学籍番号(student_id)を取得する
     # user_id = request.form.get('user_id')

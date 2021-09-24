@@ -10,9 +10,11 @@
 
 
 
-<div class="container add_books">
-  <div class="flex-wrapper">
-      <div id="interactive">
+
+<div class="container lender">
+  <div class="flex-wrapper">        
+      <div id="photo-area" class="viewport">
+
         <form action="{{url_for('lender.get_book')}}" method="POST" id="sendForm">
           <input type="hidden" name="jan" id="jan">
         </form>
@@ -36,7 +38,7 @@
           <input type="number" name="book-amount" id="book-amout" value={{books_json[0].amount}} readonly>
         </div>
         <div class="form-item">
-          <label for="book-amount">貸出可能冊数{{ books_json[0].stock }}</label>
+          <label for="book-amount">貸出可能冊数</label>
           <input type="number" name="book-amount" id="book-amout" value={{books_json[0].stock}} readonly>
         </div>
           {% if books_json[0].flg is not defined %}
@@ -69,14 +71,14 @@
         
         {% if result %}
           {% if operation_name == "lend" %}
-            <p>貸出を受け付けました。</p>
+            <p>貸出を受け付けました</p>
           {% elif operation_name == "return" %}
-            <p>返却を受け付けました。</p>
+            <p>返却を受け付けました</p>
           {% elif operation_name != "" %}
             <p>処理名にエラーが発見されました、管理者にお問い合わせください。</p>
           {% endif %}
         {% elif  result %}
-          <p class="error">処理に失敗いたしました、再度お願いいたします。</p>
+          <p class="error">処理に失敗いたしました、再度お願いいたします</p>
         {% endif %}
         <div class="form-item">
           <label for="book-name">JANコード</label>

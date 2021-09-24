@@ -52,6 +52,8 @@ def search_book_list():
 def edit_view(jancord):
     if "user_id" not in session: #? セッションの有無
         return redirect("/")
+    if session["user_id"][0] != '0': #? 管理者アカウントかの確認
+        return redirect("/login-top/top_page")
     sel_book_detail = select_bookdetail(jancord)
     return render_template('edit.html', sel_book_detail=sel_book_detail, jancord=jancord)
 
@@ -60,6 +62,8 @@ def edit_view(jancord):
 def update_detail(jancord):
     if "user_id" not in session: #? セッションの有無
         return redirect("/")
+    if session["user_id"][0] != '0': #? 管理者アカウントかの確認
+        return redirect("/login-top/top_page")
     title = request.form.get("name")
     author = request.form.get("author")
     stock = request.form.get("stock")
@@ -74,6 +78,8 @@ def update_detail(jancord):
 def delete_detail(jancord):
     if "user_id" not in session: #? セッションの有無
         return redirect("/")
+    if session["user_id"][0] != '0': #? 管理者アカウントかの確認
+        return redirect("/login-top/top_page")
     result = dlt_d(jancord)
     if (result):
         return redirect(url_for('booklist_view.booklist_view'))

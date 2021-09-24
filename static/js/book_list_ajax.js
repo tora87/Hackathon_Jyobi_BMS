@@ -8,7 +8,8 @@ $(function () {
             data: {'jan': book_jan},
         }).done(function (res) {
             $('body').html(res);
-        }).error(function (err) {
+            $('#book-detail').addClass('active');
+        }).fail(function (err) {
             console.log(err);
         })
     })
@@ -20,7 +21,7 @@ $(function () {
             data: {'key': kw},
         }).done(function (res) {
             $('body').html(res);
-        }).error(function (err) {
+        }).fail(function (err) {
             console.log(err);
         })
     })
@@ -32,8 +33,12 @@ $(function () {
             data: {'key': ''},
         }).done(function (res) {
             $('body').html(res);
-        }).error(function (err) {
+        }).fail(function (err) {
             console.log(err);
         })
+    })
+
+    $('#close-btn').on('click',function(){
+        $('#book-detail').removeClass('active');
     })
 })

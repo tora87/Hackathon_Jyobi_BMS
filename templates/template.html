@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../static/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../static/css/logout-spinner.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logout-spinner.css') }}">
   {% block css %}{% endblock %}
-  {% block script %}{% endblock %}
+  {% block script %}
+  
+  {% endblock %}
   <title>Jyobi-BMS</title>
 </head>
 <body>
@@ -17,14 +21,14 @@
         <h1 class="logo"><a>Jyobi-BMS</a></h1>
       {% else %}
         <h1 class="logo"><a href="{{url_for('login_top.top_page')}}">Jyobi-BMS</a></h1>
-        <nav class="header-nav">
+        <nav class="header-nav pc">
           <ul>
             <li class="header-nav-item"><a href="{{url_for('booklist_view.booklist_view')}}">一覧</a></li>
               {% if session.get('user_id')[0] == '0'  %}
                 <li class="header-nav-item"><a href="{{url_for('add_books.add_books')}}">追加</a></li>
                 <li class="header-nav-item"><a href="{{url_for('create_qr.make_qr')}}">QR作成</a></li>
               {% endif %}
-            <li class="header-nav-item"><a href="{{url_for('lender.get_lender')}}">借りる</a></li>
+            <li class="header-nav-item"><a href="{{url_for('lender.get_lender')}}">貸出/返却</a></li>
           </ul>
         </nav>
       {% endif %}
@@ -36,22 +40,54 @@
           <div class="user-number">学籍番号：{{ session['user_id'] }}</div>
           <div class="user-name">生徒名&emsp;：{{ session['user_name'] }}</div>
         </div>
-        <div class="log-out-wrapper">
+        <div class="log-out-wrapper pc">
           <a href="{{url_for('login_top.logout')}}"><i class="fas fa-sign-out-alt"></i></a>
           <div class="logout-text">ログアウト</div>
+        </div>
+        <div class="humburger-menu sp">
+          <div id="menu-btn" class="menu-btn"><span></span></div>
+        </div>
+        <div id="humburger-menu-content" class="sp">
+          <ul>
+            <li class="hmc-item"><a href="{{url_for('booklist_view.booklist_view')}}">一覧</a></li>
+            <li class="hmc-item"><a href="{{url_for('lender.get_lender')}}">貸出/返却</a></li>
+            <li class="hmc-item log-out-wrapper"><a href="{{url_for('login_top.logout')}}">ログアウト</a></li>
+          </ul>
         </div>
           {% endif %}
       </div>
     </div>
   </header>
-  <div class="header-bottom">
+  <div class="header-bottom pc">
       {% if session.get('user_id') == none %}
       {% else %}
           <div id="back_button" class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
       {% endif %}
   </div>
+      <div class="load-wrapp">
+      <div class="load-6">
+        <p>5秒後にログアウトします<br>タップ/右クリックでキャンセルできます</p>
+        <div class="letter-holder">
+          <div class="l-1 letter">L</div>
+          <div class="l-2 letter">o</div>
+          <div class="l-3 letter">g</div>
+          <div class="l-4 letter">o</div>
+          <div class="l-5 letter">u</div>
+          <div class="l-6 letter">t</div>
+          <div class="l-7 letter">@</div>
+          <div class="l-8 letter">N</div>
+          <div class="l-9 letter">o</div>
+          <div class="l-10 letter">w</div>
+        </div>
+      </div>
+    </div>
+
+
   {% block content %}
 
   {% endblock%}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript" src="../static/js/logoutSpinner.js"></script>
+  <script type="text/javascript" src="../static/js/humburger.js"></script>
 </body>
 </html>

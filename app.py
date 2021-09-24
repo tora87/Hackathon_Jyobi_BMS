@@ -8,11 +8,15 @@ from lender import lend
 from create_qr import qr
 from history_view import hist
 
-from flask import Flask, Blueprint, redirect, url_for
+from flask import Flask, Blueprint, redirect, url_for, render_template
+
+from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
 app.secret_key = "".join(random.choices(string.ascii_letters, k=256))
 
+bp = Blueprint('exception', __name__)
+bp.errorhandler(NotFound)
 
 # ログイン、トップページ
 app.register_blueprint(log_top)
@@ -35,6 +39,21 @@ app.register_blueprint(hist)
 @app.route('/')
 def default_transition():
     return redirect(url_for('login_top.login_page'))
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("page_not_found.html")
+
+
+@app.errorhandler(404)
+def bp_not_found(e):
+    return render_template("exception.html")
+
+
+@app.errorhandler(Exception)
+def exception(e):
+    return render_template("internal.html")
 
 
 if __name__ == '__main__':

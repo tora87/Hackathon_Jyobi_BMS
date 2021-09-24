@@ -32,6 +32,24 @@
     border: solid .3px rgb(67, 67, 67);
 }
 
-.container-fluid .d-flex .btn-outline-primary {
+@media screen and (max-width: 767px) {
+    .container-fluid {
+        position: static;
+        width: 100%;
+        margin: 10px auto;
+    }
 
+    .container-fluid .d-flex {
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    .container-fluid .d-flex .btn {
+        padding: 3px 3px;
+    }
+
+    .container-fluid .d-flex .form-control {
+        width: 160px !important;
+        padding: 4px;
+    }
 }
