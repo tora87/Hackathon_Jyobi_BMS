@@ -26,7 +26,7 @@
 					{% if session.get('user_id')[0] == '0' %}
 					<td width="16.25%"><small>{{item[3]}}</small><p class="center-name">{{item[4]}}</p></td>
 					{% endif %}
-					<td width="14%">{% if item[2]==1 %}
+					<td width="14%">{% if item[2]==0 %}
 						返却済み
 						{% else %}
 						貸出中
