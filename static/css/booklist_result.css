@@ -11,6 +11,7 @@
 
 .booklist_result {
     border-bottom: 1.5px solid #7e97ed;
+    margin-bottom: 15px;
 }
 
 .book-detail input {
@@ -19,5 +20,18 @@
     text-overflow: ellipsis;
     color: #9c9c9c;
     font-size: 17px;
+}
 
+.fas.sp {
+    display: none;
+}
+
+@media screen and (max-width: 767px) {
+    .book-detail input {
+        width: 100%;
+    }
+    
+    .fas.sp {
+        display: inline-block;
+    }
 }

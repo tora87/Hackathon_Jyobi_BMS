@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="../static/css/logout-spinner.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/logout-spinner.css') }}">
   {% block css %}{% endblock %}
-  {% block script %}{% endblock %}
+  {% block script %}
+  
+  {% endblock %}
   <title>Jyobi-BMS</title>
 </head>
 <body>
@@ -19,7 +21,7 @@
         <h1 class="logo"><a>Jyobi-BMS</a></h1>
       {% else %}
         <h1 class="logo"><a href="{{url_for('login_top.top_page')}}">Jyobi-BMS</a></h1>
-        <nav class="header-nav">
+        <nav class="header-nav pc">
           <ul>
             <li class="header-nav-item"><a href="{{url_for('booklist_view.booklist_view')}}">一覧</a></li>
               {% if session.get('user_id')[0] == '0'  %}
@@ -38,15 +40,25 @@
           <div class="user-number">学籍番号：{{ session['user_id'] }}</div>
           <div class="user-name">生徒名&emsp;：{{ session['user_name'] }}</div>
         </div>
-        <div class="log-out-wrapper">
+        <div class="log-out-wrapper pc">
           <a href="{{url_for('login_top.logout')}}"><i class="fas fa-sign-out-alt"></i></a>
           <div class="logout-text">ログアウト</div>
+        </div>
+        <div class="humburger-menu sp">
+          <div id="menu-btn" class="menu-btn"><span></span></div>
+        </div>
+        <div id="humburger-menu-content" class="sp">
+          <ul>
+            <li class="hmc-item"><a href="{{url_for('booklist_view.booklist_view')}}">一覧</a></li>
+            <li class="hmc-item"><a href="{{url_for('lender.get_lender')}}">貸出/返却</a></li>
+            <li class="hmc-item log-out-wrapper"><a href="{{url_for('login_top.logout')}}">ログアウト</a></li>
+          </ul>
         </div>
           {% endif %}
       </div>
     </div>
   </header>
-  <div class="header-bottom">
+  <div class="header-bottom pc">
       {% if session.get('user_id') == none %}
       {% else %}
           <div id="back_button" class="back-btn back" onclick="history.back()"><i class="fas fa-arrow-left"></i></div>
@@ -76,5 +88,6 @@
   {% endblock%}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript" src="../static/js/logoutSpinner.js"></script>
+  <script type="text/javascript" src="../static/js/humburger.js"></script>
 </body>
 </html>
