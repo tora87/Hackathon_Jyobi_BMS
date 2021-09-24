@@ -53,6 +53,9 @@ button {
   color: #f00;
 }
 
+#back_button {
+  z-index: 100;
+
 .sp {
   display: none;
 }

@@ -1,6 +1,5 @@
 from databases.db_connecter import connect_db
 
-
 #? 全図書一覧取得
 def select_allbooks():
     try:
