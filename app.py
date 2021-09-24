@@ -38,6 +38,11 @@ def default_transition():
     return redirect(url_for('login_top.login_page'))
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file("images/favicon/favicon.ico")
+
+
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template("page_not_found.html")
