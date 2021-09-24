@@ -4,3 +4,13 @@
     margin-left: 50px;
     margin-bottom: 10px;
 }
+
+#photo-area {
+    position: relative;
+}
+
+.drawingBuffer {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
